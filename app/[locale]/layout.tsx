@@ -4,10 +4,12 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import { site } from "@/content/site";
 import { isLocale, locales, t, type Locale } from "@/lib/i18n";
+import type { Skin } from "@/lib/skins";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeScript } from "@/components/theme-script";
-import { Strings } from "@/components/neck/strings";
+import { SiteBackdrop } from "@/components/site-backdrop";
+import { getSkin } from "@/lib/settings";
 import { AnalyticsBeacon } from "@/components/analytics-beacon";
 
 // Kanit covers Thai and Latin from one family and goes genuinely heavy, which
@@ -32,12 +34,25 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4f3ef" },
-    { media: "(prefers-color-scheme: dark)", color: "#191310" },
-  ],
+/**
+ * The browser chrome should match whichever skin is live, so this reads the
+ * setting rather than hard-coding one skin's ground colour.
+ */
+const CHROME: Record<Skin, { light: string; dark: string }> = {
+  neck: { light: "#efe8da", dark: "#191310" },
+  hud: { light: "#f4f3ef", dark: "#08090b" },
+  palm: { light: "#f2ece0", dark: "#16130f" },
 };
+
+export async function generateViewport(): Promise<Viewport> {
+  const { light, dark } = CHROME[await getSkin()];
+  return {
+    themeColor: [
+      { media: "(prefers-color-scheme: light)", color: light },
+      { media: "(prefers-color-scheme: dark)", color: dark },
+    ],
+  };
+}
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -90,6 +105,7 @@ export default async function LocaleLayout({
   if (!isLocale(raw)) notFound();
   const locale: Locale = raw;
   const copy = t(locale);
+  const skin = await getSkin();
 
   const primary = [
     { href: `/${locale}/work`, label: copy.nav.work },
@@ -111,6 +127,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
+      data-skin={skin}
       className={`${display.variable} ${thai.variable} ${mono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
@@ -125,9 +142,10 @@ export default async function LocaleLayout({
           askLabel={copy.nav.ask}
           toggleThemeLabel={copy.common.toggleTheme}
           skipLabel={copy.common.skipToContent}
+          sound={skin === "neck"}
         />
         <AnalyticsBeacon locale={locale} />
-        <Strings />
+        <SiteBackdrop skin={skin} />
         <main id="main" className="relative z-10 mx-auto w-full max-w-5xl flex-1 px-5">
           {children}
         </main>

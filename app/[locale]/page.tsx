@@ -6,11 +6,14 @@ import { listPosts } from "@/lib/posts";
 import { ArrowLink } from "@/components/ui";
 import { ProjectCard } from "@/components/project-card";
 import { PostCard } from "@/components/post-card";
-import { Fret } from "@/components/neck/fret";
-import { Hero } from "@/components/neck/hero";
+import { SiteHero } from "@/components/site-hero";
+import { SectionDivider } from "@/components/section-divider";
 import type { Chord } from "@/components/neck/chord-nav";
+import type { Chip } from "@/components/hud/hero";
+import type { PalmLine } from "@/components/palm/hero";
 import { Reveal } from "@/components/hud/reveal";
 import { TechStack } from "@/components/tech-stack";
+import { getSkin } from "@/lib/settings";
 
 /**
  * Every destination is a chord in standard tuning, low string first. Open
@@ -27,6 +30,36 @@ function navChords(locale: Locale, copy: ReturnType<typeof t>): Chord[] {
   ];
 }
 
+/** Facts pulled from the actual work — these float around the HUD wordmark. */
+function navChips(locale: Locale, projectCount: number): Chip[] {
+  const th = locale === "th";
+  return [
+    { value: "1st", label: th ? "เกียรตินิยม มช." : "class honours, CMU" },
+    { value: `${projectCount}`, label: th ? "โปรเจกต์" : "projects shipped" },
+    { value: "95+", label: th ? "หัวข้อใน README" : "README sections" },
+    { value: "11", label: th ? "บั๊กที่ audit เจอ" : "bugs found in audit" },
+    { value: "10K", label: th ? "แถว Excel ที่ล้าง" : "rows cleansed" },
+    { value: "3", label: th ? "แอปบน LINE" : "apps on LINE" },
+  ];
+}
+
+/**
+ * The palm skin reads the hand instead of listing a menu. Each palmistry line
+ * is matched to the part of the site it honestly describes — the life line to
+ * the work, the head line to the writing — so the conceit stays a joke the
+ * visitor is in on rather than a riddle they have to solve.
+ */
+function navLines(locale: Locale, copy: ReturnType<typeof t>): PalmLine[] {
+  const th = locale === "th";
+  return [
+    { line: "life", name: th ? "เส้นชีวิต" : "Life line", label: copy.nav.work, href: `/${locale}/work` },
+    { line: "head", name: th ? "เส้นสมอง" : "Head line", label: copy.nav.blog, href: `/${locale}/blog` },
+    { line: "heart", name: th ? "เส้นใจ" : "Heart line", label: copy.nav.music, href: `/${locale}/music` },
+    { line: "fate", name: th ? "เส้นวาสนา" : "Fate line", label: copy.nav.lab, href: `/${locale}/lab` },
+    { line: "sun", name: th ? "เส้นสุริยะ" : "Sun line", label: copy.nav.ask, href: `/${locale}/ask` },
+  ];
+}
+
 export default async function HomePage({
   params,
 }: {
@@ -38,25 +71,43 @@ export default async function HomePage({
   const copy = t(locale);
   const th = locale === "th";
 
+  const skin = await getSkin();
+
   const featured = projects.filter((p) => p.featured);
   const posts = listPosts(locale).slice(0, 3);
 
   return (
     <>
-      <Hero
+      <SiteHero
+        skin={skin}
         locale={locale}
         kicker={copy.home.kicker}
         tagline={copy.home.tagline}
         intro={copy.home.intro}
+        ctaWork={copy.home.ctaWork}
+        ctaAsk={copy.home.ctaAsk}
         chords={navChords(locale, copy)}
+        chips={navChips(locale, projects.length)}
+        lines={navLines(locale, copy)}
         playHint={
-          th
-            ? "กดคอร์ดไหนก็ได้ — มีเสียงจริง ไม่มีไฟล์เสียงสักไฟล์"
-            : "Press any chord — it really sounds, with no audio files"
+          skin === "palm"
+            ? th
+              ? "ชื่อเล่นผมแปลว่าฝ่ามือ เลยขอดูลายมือให้เสียเลย"
+              : "My nickname means palm of the hand, so the menu is a reading"
+            : th
+              ? "กดคอร์ดไหนก็ได้ — มีเสียงจริง ไม่มีไฟล์เสียงสักไฟล์"
+              : "Press any chord — it really sounds, with no audio files"
         }
       />
 
-      <Fret position={3} title={copy.home.featured} meta={copy.home.featuredSub} id="work">
+      <SectionDivider
+        skin={skin}
+        position={3}
+        index="01"
+        title={copy.home.featured}
+        meta={copy.home.featuredSub}
+        id="work"
+      >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((project, i) => (
             <ProjectCard
@@ -71,10 +122,17 @@ export default async function HomePage({
         <div className="mt-8">
           <ArrowLink href={`/${locale}/work`}>{copy.common.allWork}</ArrowLink>
         </div>
-      </Fret>
+      </SectionDivider>
 
       {posts.length > 0 && (
-        <Fret position={5} title={copy.home.latestPosts} meta={copy.home.latestPostsSub} id="writing">
+        <SectionDivider
+          skin={skin}
+          position={5}
+          index="02"
+          title={copy.home.latestPosts}
+          meta={copy.home.latestPostsSub}
+          id="writing"
+        >
           <div className="border-t border-line">
             {posts.map((post, i) => (
               <PostCard
@@ -89,11 +147,13 @@ export default async function HomePage({
           <div className="mt-8">
             <ArrowLink href={`/${locale}/blog`}>{copy.common.allPosts}</ArrowLink>
           </div>
-        </Fret>
+        </SectionDivider>
       )}
 
-      <Fret
+      <SectionDivider
+        skin={skin}
         position={7}
+        index="03"
         title={copy.home.nowTitle}
         meta={th ? "สถานะปัจจุบัน" : "Current status"}
         id="now"
@@ -114,10 +174,12 @@ export default async function HomePage({
         <div className="mt-8">
           <ArrowLink href={`/${locale}/now`}>{copy.nav.now}</ArrowLink>
         </div>
-      </Fret>
+      </SectionDivider>
 
-      <Fret
+      <SectionDivider
+        skin={skin}
         position={9}
+        index="04"
         title={th ? "เคยเขียนอะไรมาบ้าง" : "What I've worked with"}
         meta={
           th
@@ -127,10 +189,12 @@ export default async function HomePage({
         id="stack"
       >
         <TechStack locale={locale} compact />
-      </Fret>
+      </SectionDivider>
 
-      <Fret
+      <SectionDivider
+        skin={skin}
         position={12}
+        index="05"
         title={copy.home.beyondCode}
         meta={copy.home.beyondCodeSub}
         id="beyond"
@@ -167,7 +231,7 @@ export default async function HomePage({
             </Reveal>
           ))}
         </div>
-      </Fret>
+      </SectionDivider>
     </>
   );
 }

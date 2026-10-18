@@ -1,6 +1,10 @@
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { destroySession, hasSession } from "@/lib/admin-auth";
 import { getStats, type Breakdown } from "@/lib/analytics";
+import { getSkin, setSkin, SKIN_TAG } from "@/lib/settings";
+import { isSkin, skinMeta, skins, type Skin } from "@/lib/skins";
+import { site } from "@/content/site";
 
 export const dynamic = "force-dynamic";
 
@@ -10,6 +14,27 @@ async function signOut() {
   "use server";
   await destroySession();
   redirect("/admin/login");
+}
+
+async function chooseSkin(formData: FormData) {
+  "use server";
+  // The session check has to be repeated here. A server action is a POST
+  // endpoint of its own — reaching it does not require having rendered the
+  // page that contains the form.
+  if (!(await hasSession())) redirect("/admin/login");
+
+  const next = formData.get("skin");
+  if (!isSkin(next)) return;
+
+  await setSkin(next);
+  // The setting is read through a cache tagged SKIN_TAG, so expiring the tag
+  // is what makes the switch visible. updateTag rather than revalidateTag:
+  // inside a server action it expires immediately and gives this very render
+  // the value we just wrote, instead of a stale read with a background
+  // refresh. revalidatePath then drops the cached HTML of the public pages,
+  // which had the old skin baked into their markup.
+  updateTag(SKIN_TAG);
+  revalidatePath("/", "layout");
 }
 
 export default async function AdminPage({
@@ -23,7 +48,7 @@ export default async function AdminPage({
   const parsed = Number(d);
   const days = RANGES.includes(parsed as (typeof RANGES)[number]) ? parsed : 30;
 
-  const stats = await getStats(days);
+  const [stats, skin] = await Promise.all([getStats(days), getSkin()]);
 
   return (
     <main className="mx-auto max-w-5xl px-5 py-10">
@@ -87,9 +112,12 @@ export default async function AdminPage({
             <Table title="ประเทศ" rows={stats.countries} />
             <Table title="อุปกรณ์" rows={stats.devices} />
             <Table title="ภาษา" rows={stats.locales} />
+            <Table title="ดีไซน์ที่เห็น" rows={stats.skins} />
           </div>
         </>
       )}
+
+      <SkinPicker current={skin} configured={stats !== null} />
 
       <footer className="mt-16 border-t border-line pt-5">
         <p className="text-xs leading-relaxed text-muted">
@@ -99,6 +127,107 @@ export default async function AdminPage({
         </p>
       </footer>
     </main>
+  );
+}
+
+/**
+ * Theme switcher for the public site. One form per skin rather than a select
+ * plus a save button — there are three of them, and a single click that takes
+ * effect immediately is less to get wrong than a two-step form.
+ */
+function SkinPicker({
+  current,
+  configured,
+}: {
+  current: Skin;
+  configured: boolean;
+}) {
+  return (
+    <section className="mt-16 border-t border-line pt-8">
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <h2 className="font-display text-lg font-semibold">ดีไซน์ของเว็บหลัก</h2>
+        <a
+          href={site.url}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="hud text-muted transition hover:text-brass"
+        >
+          เปิดดูเว็บจริง ↗
+        </a>
+      </div>
+      <p className="mt-2 text-sm leading-relaxed text-muted">
+        เลือกแล้วมีผลทันที โครงหน้าเหมือนเดิมทุกอัน เปลี่ยนแค่สี ฮีโร่
+        และหัวข้อแต่ละส่วน — ส่วนสว่าง/มืด ผู้เข้าชมยังสลับได้เองเหมือนเดิม
+      </p>
+
+      {!configured && (
+        <p className="mt-4 border border-dashed border-line p-4 text-sm leading-relaxed text-muted">
+          ยังไม่ได้ตั้ง <code className="text-ink">DATABASE_URL</code> —
+          ตอนนี้เว็บจะใช้ดีไซน์เริ่มต้นไปก่อน และกดเลือกที่นี่จะยังไม่บันทึก
+        </p>
+      )}
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-3">
+        {skins.map((option) => {
+          const meta = skinMeta[option];
+          const live = option === current;
+          const [ground, ink, accent] = meta.swatch;
+
+          return (
+            <form key={option} action={chooseSkin}>
+              <input type="hidden" name="skin" value={option} />
+              <button
+                type="submit"
+                disabled={live || !configured}
+                aria-current={live ? "true" : undefined}
+                className={`flex w-full flex-col text-left transition ${
+                  live
+                    ? "border-2 border-brass"
+                    : "border border-line enabled:hover:border-brass disabled:opacity-50"
+                }`}
+              >
+                {/* A miniature of the skin, drawn from its own palette: ground,
+                    a wordmark bar in ink, a rule and dots in the accent. */}
+                <span
+                  aria-hidden
+                  className="flex h-24 w-full flex-col justify-end gap-1.5 p-3"
+                  style={{ background: ground }}
+                >
+                  <span
+                    className="block h-3 w-3/4 rounded-sm"
+                    style={{ background: ink }}
+                  />
+                  <span className="block h-1 w-full" style={{ background: accent }} />
+                  <span className="flex gap-1">
+                    {[0, 1, 2].map((i) => (
+                      <span
+                        key={i}
+                        className="block h-1.5 w-1.5 rounded-full"
+                        style={{ background: accent }}
+                      />
+                    ))}
+                  </span>
+                </span>
+
+                <span className="flex w-full flex-col gap-1 p-3">
+                  <span className="flex items-baseline justify-between gap-2">
+                    <span className="font-display text-sm font-semibold">
+                      {meta.name.th}
+                    </span>
+                    <span className="hud text-brass">
+                      {live ? "ใช้อยู่" : "เลือก"}
+                    </span>
+                  </span>
+                  <span className="text-xs leading-relaxed text-muted">
+                    {meta.note.th}
+                  </span>
+                </span>
+              </button>
+            </form>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 

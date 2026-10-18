@@ -16,6 +16,7 @@ export function SiteHeader({
   askLabel,
   toggleThemeLabel,
   skipLabel,
+  sound,
 }: {
   locale: Locale;
   primary: NavItem[];
@@ -23,6 +24,8 @@ export function SiteHeader({
   askLabel: string;
   toggleThemeLabel: string;
   skipLabel: string;
+  /** Only the fretboard skin makes any sound, so only it gets a mute button. */
+  sound: boolean;
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -104,7 +107,11 @@ export function SiteHeader({
           </Link>
 
           <div className="flex items-center gap-1 border-l border-line px-2">
-            <SoundToggle label={locale === "th" ? "เปิด/ปิดเสียง" : "Toggle sound"} />
+            {sound && (
+              <SoundToggle
+                label={locale === "th" ? "เปิด/ปิดเสียง" : "Toggle sound"}
+              />
+            )}
             <ThemeToggle label={toggleThemeLabel} />
           </div>
 

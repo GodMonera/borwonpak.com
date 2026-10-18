@@ -32,8 +32,12 @@ async function ensureSchema() {
            referrer    TEXT,
            country     TEXT,
            device      TEXT,
-           visitor     TEXT        NOT NULL
+           visitor     TEXT        NOT NULL,
+           skin        TEXT
          );
+         -- Added after the table shipped, so it has to be an ALTER as well as
+         -- part of the CREATE above. Rows from before the switcher stay NULL.
+         ALTER TABLE pageview ADD COLUMN IF NOT EXISTS skin TEXT;
          CREATE INDEX IF NOT EXISTS pageview_seen_at_idx ON pageview (seen_at DESC);
          CREATE INDEX IF NOT EXISTS pageview_visitor_idx ON pageview (visitor);`,
       )
@@ -88,6 +92,8 @@ export type PageviewInput = {
   country: string | null;
   device: string;
   visitor: string;
+  /** Which skin the visitor actually saw — null for views predating skins. */
+  skin: string | null;
 };
 
 export async function recordPageview(input: PageviewInput) {
@@ -95,8 +101,8 @@ export async function recordPageview(input: PageviewInput) {
   if (!pool) return;
   await ensureSchema();
   await pool.query(
-    `INSERT INTO pageview (path, locale, referrer, country, device, visitor)
-          VALUES ($1, $2, $3, $4, $5, $6)`,
+    `INSERT INTO pageview (path, locale, referrer, country, device, visitor, skin)
+          VALUES ($1, $2, $3, $4, $5, $6, $7)`,
     [
       input.path.slice(0, 300),
       input.locale?.slice(0, 8) ?? null,
@@ -104,6 +110,7 @@ export async function recordPageview(input: PageviewInput) {
       input.country?.slice(0, 8) ?? null,
       input.device,
       input.visitor,
+      input.skin,
     ],
   );
 }
@@ -124,6 +131,7 @@ export type Stats = {
   countries: Breakdown[];
   devices: Breakdown[];
   locales: Breakdown[];
+  skins: Breakdown[];
 };
 
 const EMPTY: Stats = {
@@ -134,6 +142,7 @@ const EMPTY: Stats = {
   countries: [],
   devices: [],
   locales: [],
+  skins: [],
 };
 
 export async function getStats(days = 30): Promise<Stats | null> {
@@ -157,8 +166,16 @@ export async function getStats(days = 30): Promise<Stats | null> {
     return rows.map((r) => ({ label: r.label, views: Number(r.views) }));
   }
 
-  const [totalsRes, dailyRes, pages, referrers, countries, devices, locales] =
-    await Promise.all([
+  const [
+    totalsRes,
+    dailyRes,
+    pages,
+    referrers,
+    countries,
+    devices,
+    locales,
+    skins,
+  ] = await Promise.all([
       pool.query<{ views: string; visitors: string; days: string }>(
         `SELECT count(*)::text                   AS views,
                 count(DISTINCT visitor)::text    AS visitors,
@@ -182,6 +199,7 @@ export async function getStats(days = 30): Promise<Stats | null> {
       breakdown("country"),
       breakdown("device"),
       breakdown("locale"),
+      breakdown("skin"),
     ]);
 
   const t = totalsRes.rows[0];
@@ -202,6 +220,7 @@ export async function getStats(days = 30): Promise<Stats | null> {
     countries,
     devices,
     locales,
+    skins,
   };
 }
 

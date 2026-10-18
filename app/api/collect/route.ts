@@ -7,6 +7,7 @@ import {
   visitorHash,
 } from "@/lib/analytics";
 import { site } from "@/content/site";
+import { getSkin } from "@/lib/settings";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -74,6 +75,9 @@ export async function POST(req: Request) {
       country: req.headers.get("x-vercel-ip-country"),
       device: deviceClass(userAgent),
       visitor: visitorHash(ip, userAgent),
+      // Read server-side rather than trusting the beacon: the client could
+      // report any string, and the answer is a cached database read anyway.
+      skin: await getSkin(),
     });
   } catch (err) {
     // A failed insert must never surface to the visitor.

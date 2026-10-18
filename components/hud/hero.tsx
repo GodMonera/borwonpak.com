@@ -156,7 +156,7 @@ export function Hero({
         <Reveal delay={320} className="mt-9 flex flex-wrap justify-center gap-3">
           <Link
             href={`/${locale}/work`}
-            className="border border-brass bg-brass px-6 py-3 font-display text-sm font-semibold uppercase tracking-wider text-[#191310] transition hover:bg-transparent hover:text-brass"
+            className="border border-brass bg-brass px-6 py-3 font-display text-sm font-semibold uppercase tracking-wider text-on-accent transition hover:bg-transparent hover:text-brass"
           >
             {ctaWork}
           </Link>
