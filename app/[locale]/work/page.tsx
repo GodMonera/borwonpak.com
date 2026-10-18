@@ -28,10 +28,16 @@ export default async function WorkPage({
 
   return (
     <>
-      <PageHeader title={copy.work.title} sub={copy.work.sub} />
-      <div className="grid gap-4 sm:grid-cols-2">
-        {projects.map((project) => (
-          <ProjectCard key={project.slug} project={project} locale={locale} />
+      <PageHeader index="01" title={copy.work.title} sub={copy.work.sub} />
+      <div className="mt-10 grid gap-4 sm:grid-cols-2">
+        {projects.map((project, i) => (
+          <ProjectCard
+            key={project.slug}
+            project={project}
+            locale={locale}
+            index={i + 1}
+            delay={(i % 2) * 90}
+          />
         ))}
       </div>
     </>

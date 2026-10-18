@@ -6,34 +6,49 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   const copy = t(locale);
   const year = new Date().getFullYear();
 
+  const links = [
+    { label: "GitHub", href: site.github, external: true },
+    { label: copy.nav.cv, href: `/${locale}/cv` },
+    { label: copy.nav.guestbook, href: `/${locale}/guestbook` },
+    { label: "RSS", href: "/feed.xml" },
+  ];
+
   return (
     <footer className="mt-24 border-t border-line">
-      <div className="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-10 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-        <p>
-          © {year} {copy.footer.rights} ·{" "}
-          <a className="hover:text-marigold" href={`mailto:${site.email}`}>
-            {site.email}
-          </a>
+      <div className="grid sm:grid-cols-4">
+        {links.map((link) =>
+          link.external ? (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="border-b border-r border-line px-5 py-5 text-muted transition hover:bg-panel hover:text-marigold"
+            >
+              <span className="hud">{link.label} ↗</span>
+            </a>
+          ) : (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="border-b border-r border-line px-5 py-5 text-muted transition hover:bg-panel hover:text-marigold"
+            >
+              <span className="hud">{link.label}</span>
+            </Link>
+          ),
+        )}
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-6">
+        <p className="hud text-muted">
+          © {year} {copy.footer.rights}
         </p>
-        <nav className="flex flex-wrap items-center gap-4">
-          <a
-            className="hover:text-marigold"
-            href={site.github}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            GitHub
-          </a>
-          <Link className="hover:text-marigold" href={`/${locale}/cv`}>
-            {copy.nav.cv}
-          </Link>
-          <Link className="hover:text-marigold" href={`/${locale}/guestbook`}>
-            {copy.nav.guestbook}
-          </Link>
-          <a className="hover:text-marigold" href="/feed.xml">
-            RSS
-          </a>
-        </nav>
+        <a
+          href={`mailto:${site.email}`}
+          className="hud text-muted transition hover:text-marigold"
+        >
+          {site.email}
+        </a>
       </div>
     </footer>
   );

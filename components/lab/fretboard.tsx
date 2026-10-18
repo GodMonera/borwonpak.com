@@ -125,16 +125,14 @@ export function Fretboard({ locale }: { locale: Locale }) {
   const fretGap = (W - left - 18) / FRETS;
 
   return (
-    <div className="rounded-lg border border-line bg-card p-5">
+    <div className="border border-line bg-panel p-5">
       <div className="flex flex-wrap gap-1.5">
         {CHORDS.map((c, i) => (
           <button
             key={c.name}
             type="button"
             onClick={() => setIndex(i)}
-            className={`rounded border px-2.5 py-1 font-mono text-xs transition ${
-              i === index
-                ? "border-marigold text-marigold"
+            className={`border px-2.5 py-1 font-mono text-xs transition ${i === index ? "border-marigold text-marigold"
                 : "border-line text-muted hover:border-marigold hover:text-marigold"
             }`}
           >
@@ -214,11 +212,11 @@ export function Fretboard({ locale }: { locale: Locale }) {
           <button
             type="button"
             onClick={strum}
-            className="mt-4 rounded-md bg-marigold px-4 py-2 text-sm font-semibold text-[#0e1116] transition hover:opacity-90"
+            className="mt-4 bg-marigold px-4 py-2 text-sm font-semibold text-[#0e1116] transition hover:opacity-90"
           >
             {locale === "th" ? "▶ ดีดฟัง" : "▶ Strum it"}
           </button>
-          <p className="mt-3 font-mono text-[11px] text-muted">
+          <p className="mt-3 hud text-muted">
             {locale === "th"
               ? "สังเคราะห์เสียงสดด้วย Web Audio ไม่มีไฟล์เสียง"
               : "Synthesised live with Web Audio — no audio files"}

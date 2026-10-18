@@ -58,7 +58,7 @@ export function AudioPlayer({
           {src ? note : unavailableLabel}
         </p>
         {src && (
-          <div className="mt-2 h-0.5 w-full overflow-hidden rounded bg-line">
+          <div className="mt-2 h-0.5 w-full overflow-hidden bg-line">
             <div
               className="h-full bg-marigold transition-[width] duration-200"
               style={{ width: `${progress}%` }}
@@ -69,7 +69,7 @@ export function AudioPlayer({
 
       <span
         aria-hidden
-        className="shrink-0 font-mono text-[11px] uppercase tracking-wider text-teal"
+        className="shrink-0 hud text-teal"
       >
         {instrument}
       </span>

@@ -63,25 +63,25 @@ export default async function ProjectPage({
 
       <dl className="mt-8 grid gap-6 border-b border-line pb-8 sm:grid-cols-3">
         <div>
-          <dt className="font-mono text-[11px] uppercase tracking-wider text-teal">
+          <dt className="hud text-teal">
             {copy.common.year}
           </dt>
           <dd className="mt-1 text-sm">{project.year}</dd>
         </div>
         <div>
-          <dt className="font-mono text-[11px] uppercase tracking-wider text-teal">
+          <dt className="hud text-teal">
             {copy.common.role}
           </dt>
           <dd className="mt-1 text-sm">{project.role[locale]}</dd>
         </div>
         <div>
-          <dt className="font-mono text-[11px] uppercase tracking-wider text-teal">
+          <dt className="hud text-teal">
             {copy.common.status}
           </dt>
           <dd className="mt-1 text-sm">{project.status[locale]}</dd>
         </div>
         <div className="sm:col-span-3">
-          <dt className="font-mono text-[11px] uppercase tracking-wider text-teal">
+          <dt className="hud text-teal">
             {copy.common.stack}
           </dt>
           <dd className="mt-2 flex flex-wrap gap-1.5">
@@ -98,8 +98,8 @@ export default async function ProjectPage({
         ))}
       </div>
 
-      <section className="mt-10 max-w-2xl rounded-lg border border-line bg-card p-6">
-        <h2 className="font-mono text-[11px] uppercase tracking-wider text-teal">
+      <section className="mt-10 max-w-2xl border border-line bg-panel p-6">
+        <h2 className="hud text-teal">
           {copy.common.highlights}
         </h2>
         <ul className="mt-3 space-y-2">

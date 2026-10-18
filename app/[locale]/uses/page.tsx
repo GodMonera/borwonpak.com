@@ -27,11 +27,11 @@ export default async function UsesPage({
 
   return (
     <>
-      <PageHeader title={copy.uses.title} sub={copy.uses.sub} />
+      <PageHeader index="05" title={copy.uses.title} sub={copy.uses.sub} />
       <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
         {uses.map((group) => (
           <section key={group.group.en}>
-            <h2 className="font-mono text-[11px] uppercase tracking-wider text-teal">
+            <h2 className="hud text-teal">
               {group.group[locale]}
             </h2>
             <dl className="mt-3 space-y-3">

@@ -27,18 +27,18 @@ export default async function GamingPage({
 
   return (
     <>
-      <PageHeader title={copy.gaming.title} sub={copy.gaming.sub} />
+      <PageHeader index="08" title={copy.gaming.title} sub={copy.gaming.sub} />
       <div className="grid max-w-3xl gap-4 sm:grid-cols-2">
         {gaming.map((item) => (
           <article
             key={item.game}
-            className="rounded-lg border border-line bg-card p-5"
+            className="border border-line bg-panel p-5"
           >
             <AccentBar accent={item.accent} />
             <h2 className="mt-3 text-lg font-semibold tracking-tight">
               {item.game}
             </h2>
-            <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-muted">
+            <p className="mt-1 hud text-muted">
               {item.role[locale]}
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted">

@@ -27,7 +27,7 @@ export default async function AskPage({
 
   return (
     <>
-      <PageHeader title={copy.ask.title} sub={copy.ask.sub} />
+      <PageHeader index="11" title={copy.ask.title} sub={copy.ask.sub} />
       <Chat
         locale={locale}
         copy={{

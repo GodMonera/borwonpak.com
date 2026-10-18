@@ -30,7 +30,7 @@ export default async function LabPage({
 
   return (
     <>
-      <PageHeader title={copy.lab.title} sub={copy.lab.sub} />
+      <PageHeader index="03" title={copy.lab.title} sub={copy.lab.sub} />
 
       <div className="space-y-16">
         <Experiment

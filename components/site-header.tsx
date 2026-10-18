@@ -49,58 +49,62 @@ export function SiteHeader({
   const other: Locale = locale === "th" ? "en" : "th";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur-md">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded focus:bg-marigold focus:px-3 focus:py-1.5 focus:text-sm focus:font-medium focus:text-[#0e1116]"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:bg-marigold focus:px-3 focus:py-1.5 focus:text-sm focus:font-medium focus:text-[#08090b]"
       >
         {skipLabel}
       </a>
 
-      <div className="mx-auto flex h-16 max-w-5xl items-center gap-3 px-5">
+      <div className="flex h-16 items-stretch">
         <Link
           href={`/${locale}`}
-          className="group flex items-baseline gap-2 font-mono text-sm tracking-tight"
+          className="group flex items-center gap-2 border-r border-line px-5 transition hover:bg-panel"
+          aria-label={locale === "th" ? "หน้าแรก" : "Home"}
         >
-          <span className="text-marigold">~/</span>
-          <span className="font-semibold group-hover:text-marigold">
-            borwonpak
+          <span
+            aria-hidden
+            className="grid size-6 place-items-center border border-marigold font-display text-[11px] font-bold text-marigold"
+          >
+            B
           </span>
+          <span className="hud hidden text-ink sm:block">borwonpak</span>
         </Link>
 
-        <nav className="ml-auto hidden items-center gap-1 md:flex">
+        <nav className="hidden items-stretch md:flex">
           {primary.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`rounded-md px-2.5 py-1.5 text-sm transition ${
-                isActive(item.href)
-                  ? "text-marigold"
+              className={`flex items-center border-r border-line px-4 transition hover:bg-panel ${isActive(item.href) ? "bg-panel text-marigold"
                   : "text-muted hover:text-ink"
               }`}
             >
-              {item.label}
+              <span className="hud">{item.label}</span>
             </Link>
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-2 md:ml-0">
+        <div className="ml-auto flex items-stretch">
           <Link
             href={`/${locale}/ask`}
-            className="hidden rounded-md border border-marigold px-3 py-1.5 text-sm font-medium text-marigold transition hover:bg-marigold hover:text-[#0e1116] sm:inline-block"
+            className="hidden items-center border-l border-line px-4 text-marigold transition hover:bg-marigold hover:text-[#08090b] sm:flex"
           >
-            {askLabel}
+            <span className="hud">{askLabel}</span>
           </Link>
 
           <Link
             href={switchLocalePath(pathname, other)}
             hrefLang={other}
-            className="rounded-md border border-line px-2.5 py-1.5 font-mono text-xs uppercase text-muted transition hover:border-marigold hover:text-marigold"
+            className="flex items-center border-l border-line px-4 text-muted transition hover:bg-panel hover:text-marigold"
           >
-            {other}
+            <span className="hud">{other}</span>
           </Link>
 
-          <ThemeToggle label={toggleThemeLabel} />
+          <div className="flex items-center border-l border-line px-3">
+            <ThemeToggle label={toggleThemeLabel} />
+          </div>
 
           <button
             type="button"
@@ -108,9 +112,9 @@ export function SiteHeader({
             aria-expanded={open}
             aria-controls="site-menu"
             aria-label="Menu"
-            className="grid size-9 place-items-center rounded-md border border-line text-muted transition hover:border-marigold hover:text-marigold"
+            className="flex items-center border-l border-line px-4 text-muted transition hover:bg-panel hover:text-marigold"
           >
-            <span aria-hidden className="text-base leading-none">
+            <span aria-hidden className="text-sm leading-none">
               {open ? "✕" : "☰"}
             </span>
           </button>
@@ -118,22 +122,19 @@ export function SiteHeader({
       </div>
 
       {open && (
-        <div
-          id="site-menu"
-          className="border-t border-line bg-paper px-5 py-4"
-        >
-          <ul className="mx-auto grid max-w-5xl grid-cols-2 gap-x-6 gap-y-1 sm:grid-cols-3">
-            {[...primary, ...secondary].map((item) => (
-              <li key={item.href}>
+        <div id="site-menu" className="border-t border-line bg-panel">
+          <ul className="grid grid-cols-2 sm:grid-cols-4">
+            {[...primary, ...secondary].map((item, i) => (
+              <li key={item.href} className="border-b border-r border-line">
                 <Link
                   href={item.href}
-                  className={`block rounded-md py-2 text-sm transition ${
-                    isActive(item.href)
-                      ? "text-marigold"
-                      : "text-muted hover:text-ink"
+                  className={`flex items-baseline gap-2 px-5 py-4 transition hover:bg-panel-2 ${isActive(item.href) ? "text-marigold" : "text-muted hover:text-ink"
                   }`}
                 >
-                  {item.label}
+                  <span className="hud text-line-bright">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="hud">{item.label}</span>
                 </Link>
               </li>
             ))}

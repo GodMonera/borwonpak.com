@@ -95,7 +95,7 @@ export function Chat({ locale, copy }: { locale: Locale; copy: Copy }) {
 
   if (enabled === false) {
     return (
-      <p className="max-w-xl rounded-lg border border-dashed border-line p-5 text-sm text-muted">
+      <p className="max-w-xl border border-dashed border-line p-5 text-sm text-muted">
         {copy.offline}
       </p>
     );
@@ -104,8 +104,8 @@ export function Chat({ locale, copy }: { locale: Locale; copy: Copy }) {
   return (
     <div className="max-w-2xl">
       {messages.length === 0 ? (
-        <div className="rounded-lg border border-line bg-card p-5">
-          <p className="font-mono text-[11px] uppercase tracking-wider text-teal">
+        <div className="border border-line bg-panel p-5">
+          <p className="hud text-teal">
             {copy.suggestions}
           </p>
           <ul className="mt-3 space-y-2">
@@ -126,7 +126,7 @@ export function Chat({ locale, copy }: { locale: Locale; copy: Copy }) {
         <div className="space-y-6">
           {messages.map((m, i) => (
             <div key={i}>
-              <p className="mb-1.5 font-mono text-[11px] uppercase tracking-wider text-teal">
+              <p className="mb-1.5 hud text-teal">
                 {m.role === "user"
                   ? locale === "th"
                     ? "คุณ"
@@ -161,13 +161,13 @@ export function Chat({ locale, copy }: { locale: Locale; copy: Copy }) {
           placeholder={copy.placeholder}
           aria-label={copy.placeholder}
           disabled={enabled === null}
-          className="flex-1 rounded-md border border-line bg-card px-3.5 py-2.5 text-sm outline-none focus:border-marigold disabled:opacity-50"
+          className="flex-1 border border-line bg-panel px-3.5 py-2.5 text-sm outline-none focus:border-marigold disabled:opacity-50"
         />
         {streaming ? (
           <button
             type="button"
             onClick={() => abortRef.current?.abort()}
-            className="rounded-md border border-line px-4 py-2 text-sm font-medium transition hover:border-marigold hover:text-marigold"
+            className="border border-line px-4 py-2 text-sm font-medium transition hover:border-marigold hover:text-marigold"
           >
             {copy.stop}
           </button>
@@ -175,7 +175,7 @@ export function Chat({ locale, copy }: { locale: Locale; copy: Copy }) {
           <button
             type="submit"
             disabled={!input.trim()}
-            className="rounded-md bg-marigold px-5 py-2 text-sm font-semibold text-[#0e1116] transition hover:opacity-90 disabled:opacity-40"
+            className="bg-marigold px-5 py-2 text-sm font-semibold text-[#0e1116] transition hover:opacity-90 disabled:opacity-40"
           >
             {copy.send}
           </button>

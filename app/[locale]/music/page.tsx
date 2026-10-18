@@ -29,7 +29,7 @@ export default async function MusicPage({
 
   return (
     <>
-      <PageHeader title={copy.music.title} sub={copy.music.sub} />
+      <PageHeader index="06" title={copy.music.title} sub={copy.music.sub} />
 
       <div className="max-w-2xl">
         <p className="leading-relaxed text-muted">
@@ -54,7 +54,7 @@ export default async function MusicPage({
         </ul>
 
         {!hasAudio && (
-          <p className="mt-8 rounded-lg border border-dashed border-line p-4 text-sm text-muted">
+          <p className="mt-8 border border-dashed border-line p-4 text-sm text-muted">
             {copy.music.note}
           </p>
         )}

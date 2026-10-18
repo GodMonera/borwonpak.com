@@ -28,6 +28,7 @@ export default async function NowPage({
   return (
     <>
       <PageHeader
+        index="04"
         kicker={`${copy.common.updated} ${nowUpdated}`}
         title={copy.now.title}
         sub={copy.now.sub}
@@ -35,7 +36,7 @@ export default async function NowPage({
       <div className="max-w-2xl space-y-8">
         {nowItems.map((item) => (
           <section key={item.heading.en}>
-            <h2 className="font-mono text-[11px] uppercase tracking-wider text-teal">
+            <h2 className="hud text-teal">
               {item.heading[locale]}
             </h2>
             <p className="mt-2 leading-relaxed text-muted">

@@ -29,13 +29,19 @@ export default async function BlogPage({
 
   return (
     <>
-      <PageHeader title={copy.blog.title} sub={copy.blog.sub} />
+      <PageHeader index="02" title={copy.blog.title} sub={copy.blog.sub} />
       {posts.length === 0 ? (
         <p className="text-muted">{copy.blog.empty}</p>
       ) : (
-        <div className="max-w-3xl">
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} locale={locale} />
+        <div className="mt-10 border-t border-line">
+          {posts.map((post, i) => (
+            <PostCard
+              key={post.slug}
+              post={post}
+              locale={locale}
+              index={i + 1}
+              delay={i * 70}
+            />
           ))}
         </div>
       )}

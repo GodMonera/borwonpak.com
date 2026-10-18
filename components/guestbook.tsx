@@ -100,7 +100,7 @@ export function Guestbook({
 
   if (!configured) {
     return (
-      <p className="max-w-xl rounded-lg border border-dashed border-line p-5 text-sm text-muted">
+      <p className="max-w-xl border border-dashed border-line p-5 text-sm text-muted">
         {copy.offline}
       </p>
     );
@@ -109,7 +109,7 @@ export function Guestbook({
   return (
     <div className="max-w-2xl">
       {state === "done" ? (
-        <p className="rounded-lg border border-marigold bg-card p-5 text-sm">
+        <p className="border border-marigold bg-panel p-5 text-sm">
           {copy.thanks}
         </p>
       ) : (
@@ -120,7 +120,7 @@ export function Guestbook({
             maxLength={60}
             placeholder={copy.namePlaceholder}
             aria-label={copy.namePlaceholder}
-            className="w-full rounded-md border border-line bg-card px-3.5 py-2.5 text-sm outline-none focus:border-marigold"
+            className="w-full border border-line bg-panel px-3.5 py-2.5 text-sm outline-none focus:border-marigold"
           />
           <textarea
             value={message}
@@ -129,7 +129,7 @@ export function Guestbook({
             rows={4}
             placeholder={copy.messagePlaceholder}
             aria-label={copy.messagePlaceholder}
-            className="w-full resize-y rounded-md border border-line bg-card px-3.5 py-2.5 text-sm outline-none focus:border-marigold"
+            className="w-full resize-y border border-line bg-panel px-3.5 py-2.5 text-sm outline-none focus:border-marigold"
           />
 
           {/* Honeypot — hidden from people, irresistible to bots. */}
@@ -151,7 +151,7 @@ export function Guestbook({
             <button
               type="submit"
               disabled={state === "sending"}
-              className="rounded-md bg-marigold px-5 py-2 text-sm font-semibold text-[#0e1116] transition hover:opacity-90 disabled:opacity-50"
+              className="bg-marigold px-5 py-2 text-sm font-semibold text-[#0e1116] transition hover:opacity-90 disabled:opacity-50"
             >
               {state === "sending" ? copy.submitting : copy.submit}
             </button>
@@ -173,7 +173,7 @@ export function Guestbook({
             <p className="whitespace-pre-wrap text-sm leading-relaxed">
               {entry.message}
             </p>
-            <p className="mt-1.5 font-mono text-[11px] text-muted">
+            <p className="mt-1.5 hud text-muted">
               {entry.name} · {formatter.format(new Date(entry.created_at))}
             </p>
           </li>

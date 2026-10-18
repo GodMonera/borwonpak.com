@@ -1,11 +1,27 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { gaming, nowItems, projects, site, tracks } from "@/content/site";
+import { gaming, nowItems, projects, tracks } from "@/content/site";
 import { isLocale, t, type Locale } from "@/lib/i18n";
 import { listPosts } from "@/lib/posts";
-import { ArrowLink, Section } from "@/components/ui";
+import { ArrowLink } from "@/components/ui";
 import { ProjectCard } from "@/components/project-card";
 import { PostCard } from "@/components/post-card";
+import { Band } from "@/components/hud/band";
+import { Hero, type Chip } from "@/components/hud/hero";
+import { Reveal } from "@/components/hud/reveal";
+
+/** Facts pulled from the actual work — these float around the wordmark. */
+function heroChips(locale: Locale): Chip[] {
+  const th = locale === "th";
+  return [
+    { value: "1st", label: th ? "เกียรตินิยม มช." : "class honours, CMU" },
+    { value: `${projects.length}`, label: th ? "โปรเจกต์" : "projects shipped" },
+    { value: "95+", label: th ? "หัวข้อใน README" : "README sections" },
+    { value: "11", label: th ? "บั๊กที่ audit เจอ" : "bugs found in audit" },
+    { value: "10K", label: th ? "แถว Excel ที่ล้าง" : "rows cleansed" },
+    { value: "3", label: th ? "แอปบน LINE" : "apps on LINE" },
+  ];
+}
 
 export default async function HomePage({
   params,
@@ -16,144 +32,139 @@ export default async function HomePage({
   if (!isLocale(raw)) notFound();
   const locale: Locale = raw;
   const copy = t(locale);
+  const th = locale === "th";
 
   const featured = projects.filter((p) => p.featured);
   const posts = listPosts(locale).slice(0, 3);
 
   return (
     <>
-      <section className="pb-4">
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-marigold">
-          {copy.home.kicker}
-        </p>
-        <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-[1.12] tracking-tight sm:text-5xl">
-          {copy.home.tagline}
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-          {copy.home.intro}
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link
-            href={`/${locale}/work`}
-            className="rounded-md bg-marigold px-5 py-2.5 text-sm font-semibold text-[#0e1116] transition hover:opacity-90"
-          >
-            {copy.home.ctaWork}
-          </Link>
-          <Link
-            href={`/${locale}/ask`}
-            className="rounded-md border border-line px-5 py-2.5 text-sm font-semibold transition hover:border-marigold hover:text-marigold"
-          >
-            {copy.home.ctaAsk}
-          </Link>
-          <a
-            href={site.github}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="rounded-md border border-line px-5 py-2.5 text-sm font-semibold transition hover:border-marigold hover:text-marigold"
-          >
-            GitHub
-          </a>
-        </div>
-      </section>
+      <Hero
+        locale={locale}
+        kicker={copy.home.kicker}
+        tagline={copy.home.tagline}
+        intro={copy.home.intro}
+        ctaWork={copy.home.ctaWork}
+        ctaAsk={copy.home.ctaAsk}
+        chips={heroChips(locale)}
+      />
 
-      <Section
+      <Band
+        index="01"
         title={copy.home.featured}
-        sub={copy.home.featuredSub}
-        action={
-          <ArrowLink href={`/${locale}/work`}>{copy.common.allWork}</ArrowLink>
-        }
+        meta={copy.home.featuredSub}
+        id="work"
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((project) => (
-            <ProjectCard key={project.slug} project={project} locale={locale} />
+          {featured.map((project, i) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              locale={locale}
+              index={i + 1}
+              delay={i * 90}
+            />
           ))}
         </div>
-      </Section>
+        <div className="mt-8">
+          <ArrowLink href={`/${locale}/work`}>{copy.common.allWork}</ArrowLink>
+        </div>
+      </Band>
 
       {posts.length > 0 && (
-        <Section
+        <Band
+          index="02"
           title={copy.home.latestPosts}
-          sub={copy.home.latestPostsSub}
-          action={
-            <ArrowLink href={`/${locale}/blog`}>
-              {copy.common.allPosts}
-            </ArrowLink>
-          }
+          meta={copy.home.latestPostsSub}
+          id="writing"
         >
-          <div>
-            {posts.map((post) => (
-              <PostCard key={post.slug} post={post} locale={locale} />
+          <div className="border-t border-line">
+            {posts.map((post, i) => (
+              <PostCard
+                key={post.slug}
+                post={post}
+                locale={locale}
+                index={i + 1}
+                delay={i * 90}
+              />
             ))}
           </div>
-        </Section>
+          <div className="mt-8">
+            <ArrowLink href={`/${locale}/blog`}>{copy.common.allPosts}</ArrowLink>
+          </div>
+        </Band>
       )}
 
-      <Section title={copy.home.nowTitle}>
-        <dl className="grid gap-5 sm:grid-cols-2">
-          {nowItems.map((item) => (
-            <div
-              key={item.heading.en}
-              className="rounded-lg border border-line bg-card p-5"
-            >
-              <dt className="font-mono text-[11px] uppercase tracking-wider text-teal">
+      <Band
+        index="03"
+        title={copy.home.nowTitle}
+        meta={th ? "สถานะปัจจุบัน" : "Current status"}
+        id="now"
+      >
+        <dl className="grid gap-px border border-line bg-line sm:grid-cols-2">
+          {nowItems.map((item, i) => (
+            <Reveal key={item.heading.en} delay={i * 80} className="bg-panel p-6">
+              <dt className="hud flex items-center gap-2 text-teal">
+                <span aria-hidden className="inline-block size-1.5 bg-teal" />
                 {item.heading[locale]}
               </dt>
-              <dd className="mt-2 text-sm leading-relaxed text-muted">
+              <dd className="mt-3 text-sm leading-relaxed text-muted">
                 {item.body[locale]}
               </dd>
-            </div>
+            </Reveal>
           ))}
         </dl>
-        <div className="mt-5">
+        <div className="mt-8">
           <ArrowLink href={`/${locale}/now`}>{copy.nav.now}</ArrowLink>
         </div>
-      </Section>
+      </Band>
 
-      <Section title={copy.home.beyondCode} sub={copy.home.beyondCodeSub}>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <Link
-            href={`/${locale}/lab`}
-            className="group rounded-lg border border-line bg-card p-5 transition hover:border-marigold"
-          >
-            <span aria-hidden className="text-2xl">
-              ⚗
-            </span>
-            <h3 className="mt-3 font-semibold group-hover:text-marigold">
-              {copy.nav.lab}
-            </h3>
-            <p className="mt-1.5 text-sm text-muted">{copy.lab.sub}</p>
-          </Link>
-          <Link
-            href={`/${locale}/music`}
-            className="group rounded-lg border border-line bg-card p-5 transition hover:border-marigold"
-          >
-            <span aria-hidden className="text-2xl">
-              ♪
-            </span>
-            <h3 className="mt-3 font-semibold group-hover:text-marigold">
-              {copy.nav.music}
-            </h3>
-            <p className="mt-1.5 text-sm text-muted">
-              {tracks.length} {locale === "th" ? "เพลง" : "pieces"} ·{" "}
-              {copy.music.sub}
-            </p>
-          </Link>
-          <Link
-            href={`/${locale}/gaming`}
-            className="group rounded-lg border border-line bg-card p-5 transition hover:border-marigold"
-          >
-            <span aria-hidden className="text-2xl">
-              ⌘
-            </span>
-            <h3 className="mt-3 font-semibold group-hover:text-marigold">
-              {copy.nav.gaming}
-            </h3>
-            <p className="mt-1.5 text-sm text-muted">
-              {gaming.map((g) => g.game).join(" · ")}
-            </p>
-          </Link>
+      <Band
+        index="04"
+        title={copy.home.beyondCode}
+        meta={copy.home.beyondCodeSub}
+        id="beyond"
+      >
+        <div className="grid gap-px border border-line bg-line sm:grid-cols-3">
+          {[
+            {
+              href: `/${locale}/lab`,
+              glyph: "⚗",
+              title: copy.nav.lab,
+              body: copy.lab.sub,
+            },
+            {
+              href: `/${locale}/music`,
+              glyph: "♪",
+              title: copy.nav.music,
+              body: `${tracks.length} ${th ? "เพลง" : "pieces"} · ${copy.music.sub}`,
+            },
+            {
+              href: `/${locale}/gaming`,
+              glyph: "⌘",
+              title: copy.nav.gaming,
+              body: gaming.map((g) => g.game).join(" · "),
+            },
+          ].map((card, i) => (
+            <Reveal key={card.href} delay={i * 80}>
+              <Link
+                href={card.href}
+                className="group flex h-full flex-col bg-panel p-6 transition hover:bg-panel-2"
+              >
+                <span aria-hidden className="text-2xl text-marigold">
+                  {card.glyph}
+                </span>
+                <h3 className="mt-4 font-display text-lg font-semibold transition group-hover:text-marigold">
+                  {card.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {card.body}
+                </p>
+              </Link>
+            </Reveal>
+          ))}
         </div>
-      </Section>
+      </Band>
     </>
   );
 }

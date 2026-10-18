@@ -27,7 +27,7 @@ export default async function GuestbookPage({
 
   return (
     <>
-      <PageHeader title={copy.guestbook.title} sub={copy.guestbook.sub} />
+      <PageHeader index="10" title={copy.guestbook.title} sub={copy.guestbook.sub} />
       <Guestbook
         locale={locale}
         copy={{

@@ -35,9 +35,9 @@ export default async function GalleryPage({
 
   return (
     <>
-      <PageHeader title={copy.gallery.title} sub={copy.gallery.sub} />
+      <PageHeader index="07" title={copy.gallery.title} sub={copy.gallery.sub} />
       {items.length === 0 ? (
-        <p className="max-w-xl rounded-lg border border-dashed border-line p-5 text-sm text-muted">
+        <p className="max-w-xl border border-dashed border-line p-5 text-sm text-muted">
           {copy.gallery.note}
         </p>
       ) : (

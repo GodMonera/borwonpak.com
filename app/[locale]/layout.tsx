@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Sans_Thai, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Chakra_Petch, IBM_Plex_Sans_Thai, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { site } from "@/content/site";
@@ -7,10 +7,14 @@ import { isLocale, locales, t, type Locale } from "@/lib/i18n";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeScript } from "@/components/theme-script";
+import { ScrollRuler } from "@/components/hud/scroll-ruler";
 
-const display = Space_Grotesk({
+// Squared-off technical face that covers Thai and Latin from one family, so
+// headings keep the same personality in both languages.
+const display = Chakra_Petch({
   variable: "--font-display",
-  subsets: ["latin"],
+  subsets: ["thai", "latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -121,7 +125,8 @@ export default async function LocaleLayout({
           toggleThemeLabel={copy.common.toggleTheme}
           skipLabel={copy.common.skipToContent}
         />
-        <main id="main" className="mx-auto w-full max-w-5xl flex-1 px-5 py-12">
+        <ScrollRuler />
+        <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-5 xl:pr-20">
           {children}
         </main>
         <SiteFooter locale={locale} />

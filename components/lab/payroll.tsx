@@ -126,7 +126,7 @@ export function PayrollCalculator({ locale }: { locale: Locale }) {
   );
 
   return (
-    <div className="rounded-lg border border-line bg-card p-5">
+    <div className="border border-line bg-panel p-5">
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-4">
           <Field label={th ? "ประเภทคาบ" : "Session type"}>
@@ -136,9 +136,7 @@ export function PayrollCalculator({ locale }: { locale: Locale }) {
                   key={k}
                   type="button"
                   onClick={() => setKind(k)}
-                  className={`rounded border px-3 py-1.5 text-xs transition ${
-                    kind === k
-                      ? "border-marigold text-marigold"
+                  className={`border px-3 py-1.5 text-xs transition ${kind === k ? "border-marigold text-marigold"
                       : "border-line text-muted hover:border-marigold"
                   }`}
                 >
@@ -197,14 +195,14 @@ export function PayrollCalculator({ locale }: { locale: Locale }) {
         </div>
 
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-wider text-teal">
+          <p className="hud text-teal">
             {th ? "ค่าสอนที่คำนวณได้" : "Calculated pay"}
           </p>
           <p className="mt-1 font-mono text-4xl font-semibold text-marigold tabular-nums">
             ฿{result.total.toLocaleString()}
           </p>
 
-          <p className="mt-6 font-mono text-[11px] uppercase tracking-wider text-teal">
+          <p className="mt-6 hud text-teal">
             {th ? "กฎที่ถูกใช้" : "Rules applied"}
           </p>
           <ol className="mt-2 space-y-2.5">
@@ -236,7 +234,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-muted">
+      <span className="mb-1.5 block hud text-muted">
         {label}
       </span>
       {children}

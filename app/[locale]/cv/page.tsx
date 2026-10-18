@@ -124,7 +124,7 @@ function Block({
 }) {
   return (
     <section className="mt-10">
-      <h2 className="mb-4 border-b border-line pb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-marigold">
+      <h2 className="mb-4 border-b border-line pb-2 hud text-marigold">
         {title}
       </h2>
       {children}

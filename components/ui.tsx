@@ -1,58 +1,80 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Reveal } from "@/components/hud/reveal";
 
+/** Page masthead: numbered rule, oversized title, lead. */
 export function PageHeader({
   kicker,
   title,
   sub,
+  index = "00",
 }: {
   kicker?: string;
   title: string;
   sub?: string;
+  index?: string;
 }) {
   return (
-    <header className="mb-12 border-b border-line pb-8">
-      {kicker && (
-        <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-marigold">
-          {kicker}
-        </p>
-      )}
-      <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+    <header className="border-b border-line pb-10 pt-12">
+      <div className="flex items-baseline gap-3 border-b border-line pb-3">
+        <span className="hud text-marigold">{index}</span>
+        <span className="hud text-line-bright">/</span>
+        <span className="hud text-muted">{kicker ?? title}</span>
+      </div>
+      <Reveal
+        as="h1"
+        className="mt-8 font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight sm:text-6xl"
+      >
         {title}
-      </h1>
-      {sub && <p className="mt-3 max-w-2xl text-muted">{sub}</p>}
+      </Reveal>
+      {sub && (
+        <Reveal as="p" delay={120} className="mt-5 max-w-2xl leading-relaxed text-muted">
+          {sub}
+        </Reveal>
+      )}
     </header>
   );
 }
 
+/** A titled region inside a page. */
 export function Section({
   title,
   sub,
   action,
+  index,
   children,
 }: {
   title: string;
   sub?: string;
   action?: ReactNode;
+  index?: string;
   children: ReactNode;
 }) {
   return (
-    <section className="mt-20">
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-line pb-3">
-        <div>
-          <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
-          {sub && <p className="mt-1 text-sm text-muted">{sub}</p>}
-        </div>
+    <section className="mt-16 border-t border-line">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 py-3">
+        <h2 className="hud text-ink">
+          {index && (
+            <>
+              <span className="text-marigold">{index}</span>
+              <span className="mx-2 text-line-bright">/</span>
+            </>
+          )}
+          {title}
+        </h2>
         {action}
       </div>
-      {children}
+      {sub && (
+        <p className="border-t border-line pt-3 text-sm text-muted">{sub}</p>
+      )}
+      <div className="pt-8">{children}</div>
     </section>
   );
 }
 
 export function Tag({ children }: { children: ReactNode }) {
   return (
-    <span className="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-muted">
+    <span className="hud border border-line px-2 py-1 text-muted">
       {children}
     </span>
   );
@@ -68,26 +90,18 @@ export function ArrowLink({
   external?: boolean;
 }) {
   const className =
-    "group inline-flex items-center gap-1.5 text-sm font-medium text-teal hover:text-marigold";
+    "hud group inline-flex items-center gap-2 text-teal transition hover:text-marigold";
   const inner = (
     <>
       {children}
-      <span
-        aria-hidden
-        className="transition-transform group-hover:translate-x-0.5"
-      >
+      <span aria-hidden className="transition-transform group-hover:translate-x-1">
         →
       </span>
     </>
   );
   if (external) {
     return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noreferrer noopener"
-        className={className}
-      >
+      <a href={href} target="_blank" rel="noreferrer noopener" className={className}>
         {inner}
       </a>
     );
@@ -99,14 +113,11 @@ export function ArrowLink({
   );
 }
 
-/** Small marigold/teal rule used to mark the start of a card. */
 export function AccentBar({ accent }: { accent: "marigold" | "teal" }) {
   return (
     <span
       aria-hidden
-      className={`block h-0.5 w-10 ${
-        accent === "marigold" ? "bg-marigold" : "bg-teal"
-      }`}
+      className={`block h-px w-10 ${accent ==="marigold" ? "bg-marigold" : "bg-teal"}`}
     />
   );
 }

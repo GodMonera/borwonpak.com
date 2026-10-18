@@ -85,7 +85,7 @@ export function SmartBin({ locale }: { locale: Locale }) {
   }
 
   return (
-    <div className="rounded-lg border border-line bg-card p-5">
+    <div className="border border-line bg-panel p-5">
       <div className="grid gap-6 sm:grid-cols-[1fr_1.1fr]">
         <div className="flex items-end justify-center">
           <svg
@@ -147,7 +147,7 @@ export function SmartBin({ locale }: { locale: Locale }) {
 
         <div className="space-y-4">
           <label className="block">
-            <span className="mb-1.5 flex justify-between font-mono text-[11px] uppercase tracking-wider text-muted">
+            <span className="mb-1.5 flex justify-between hud text-muted">
               <span>{th ? "ระยะมือจากเซนเซอร์" : "Hand distance"}</span>
               <span className="text-ink">{distance} cm</span>
             </span>
@@ -162,7 +162,7 @@ export function SmartBin({ locale }: { locale: Locale }) {
           </label>
 
           <label className="block">
-            <span className="mb-1.5 flex justify-between font-mono text-[11px] uppercase tracking-wider text-muted">
+            <span className="mb-1.5 flex justify-between hud text-muted">
               <span>{th ? "ขยะในถัง" : "Rubbish in the bin"}</span>
               <span className="text-ink">
                 {contentCm} cm · {fillPercent}%
@@ -178,13 +178,13 @@ export function SmartBin({ locale }: { locale: Locale }) {
             />
           </label>
 
-          <div className="flex flex-wrap gap-2 font-mono text-[11px]">
+          <div className="flex flex-wrap gap-2 hud">
             <Led on={lidOpen} label={th ? "ฝาเปิด" : "LID"} />
             <Led on={full} label={th ? "ถังเต็ม" : "FULL"} />
             <Led on label="WIFI" />
           </div>
 
-          <pre className="h-[132px] overflow-hidden rounded border border-line bg-paper p-3 font-mono text-[11px] leading-relaxed text-muted">
+          <pre className="h-[132px] overflow-hidden border border-line bg-paper p-3 hud leading-relaxed text-muted">
             {log.length === 0
               ? th
                 ? "// เลื่อนแถบด้านบนเพื่อดู serial output"
@@ -211,8 +211,7 @@ export function SmartBin({ locale }: { locale: Locale }) {
 function Led({ on, label }: { on: boolean; label: string }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded border px-2 py-1 uppercase tracking-wider ${
-        on ? "border-marigold text-marigold" : "border-line text-muted"
+      className={`inline-flex items-center gap-1.5 border px-2 py-1 uppercase tracking-wider ${on ? "border-marigold text-marigold" : "border-line text-muted"
       }`}
     >
       <span
