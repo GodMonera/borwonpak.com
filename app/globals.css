@@ -1,26 +1,152 @@
 @import "tailwindcss";
 
+/*
+  Palette: Chiang Mai at dusk — ink-indigo ground, marigold (ดาวเรือง) accent,
+  teal secondary. Deliberately not the default cream/serif editorial look.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --paper: #f4f3ef;
+  --ink: #14181f;
+  --muted: #5d6673;
+  --line: #d9d7d0;
+  --card: #fbfaf7;
+  --marigold: #c97c0a;
+  --teal: #1f6f6b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --paper: #0e1116;
+    --ink: #e8e6e1;
+    --muted: #8b95a3;
+    --line: #242b35;
+    --card: #151a21;
+    --marigold: #f2a007;
+    --teal: #4ec5bd;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root[data-theme="light"] {
+  --paper: #f4f3ef;
+  --ink: #14181f;
+  --muted: #5d6673;
+  --line: #d9d7d0;
+  --card: #fbfaf7;
+  --marigold: #c97c0a;
+  --teal: #1f6f6b;
 }
+
+:root[data-theme="dark"] {
+  --paper: #0e1116;
+  --ink: #e8e6e1;
+  --muted: #8b95a3;
+  --line: #242b35;
+  --card: #151a21;
+  --marigold: #f2a007;
+  --teal: #4ec5bd;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-card: var(--card);
+  --color-marigold: var(--marigold);
+  --color-teal: var(--teal);
+  --font-display: var(--font-display), var(--font-thai), sans-serif;
+  --font-sans: var(--font-thai), var(--font-display), sans-serif;
+  --font-mono: var(--font-mono-code), ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-thai), var(--font-display), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--marigold);
+  color: #0e1116;
+}
+
+/* Thin marigold focus ring, visible on both themes */
+:focus-visible {
+  outline: 2px solid var(--marigold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Prose styling for markdown posts */
+.prose :is(h2) {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 2.25rem 0 0.75rem;
+}
+.prose :is(h3) {
+  font-weight: 600;
+  font-size: 1.15rem;
+  margin: 1.75rem 0 0.5rem;
+}
+.prose p { margin: 0 0 1.1rem; line-height: 1.8; }
+.prose ul, .prose ol { margin: 0 0 1.1rem 1.25rem; line-height: 1.8; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li { margin-bottom: 0.3rem; }
+.prose a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
+.prose code {
+  font-family: var(--font-mono-code), monospace;
+  font-size: 0.875em;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+.prose pre {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0 0 1.25rem;
+}
+.prose pre code { background: none; border: none; padding: 0; }
+.prose blockquote {
+  border-left: 3px solid var(--marigold);
+  padding-left: 1rem;
+  color: var(--muted);
+  margin: 0 0 1.1rem;
+}
+.prose hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+.prose table { width: 100%; border-collapse: collapse; margin-bottom: 1.25rem; font-size: 0.925rem; }
+.prose th, .prose td { border: 1px solid var(--line); padding: 0.5rem 0.7rem; text-align: left; }
+.prose th { background: var(--card); font-weight: 600; }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; color: #000; }
+}
+
+/*
+  Theme-toggle icon swap. Done in CSS rather than React state so the button
+  renders correctly on the server and never flashes the wrong glyph.
+  Both spans occupy the same grid cell; exactly one is visible.
+*/
+.icon-when-light { display: block; grid-area: 1 / 1; }
+.icon-when-dark { display: none; grid-area: 1 / 1; }
+
+@media (prefers-color-scheme: dark) {
+  .icon-when-light { display: none; }
+  .icon-when-dark { display: block; }
+}
+
+:root[data-theme="light"] .icon-when-light { display: block; }
+:root[data-theme="light"] .icon-when-dark { display: none; }
+:root[data-theme="dark"] .icon-when-light { display: none; }
+:root[data-theme="dark"] .icon-when-dark { display: block; }
