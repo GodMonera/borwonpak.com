@@ -17,7 +17,7 @@ export function PageHeader({
   return (
     <header className="border-b border-line pb-10 pt-12">
       <div className="flex items-baseline gap-3 border-b border-line pb-3">
-        <span className="hud text-marigold">{index}</span>
+        <span className="hud text-brass">{index}</span>
         <span className="hud text-line-bright">/</span>
         <span className="hud text-muted">{kicker ?? title}</span>
       </div>
@@ -56,7 +56,7 @@ export function Section({
         <h2 className="hud text-ink">
           {index && (
             <>
-              <span className="text-marigold">{index}</span>
+              <span className="text-brass">{index}</span>
               <span className="mx-2 text-line-bright">/</span>
             </>
           )}
@@ -90,7 +90,7 @@ export function ArrowLink({
   external?: boolean;
 }) {
   const className =
-    "hud group inline-flex items-center gap-2 text-teal transition hover:text-marigold";
+    "hud group inline-flex items-center gap-2 text-abalone transition hover:text-brass";
   const inner = (
     <>
       {children}
@@ -113,11 +113,11 @@ export function ArrowLink({
   );
 }
 
-export function AccentBar({ accent }: { accent: "marigold" | "teal" }) {
+export function AccentBar({ accent }: { accent: "brass" | "abalone" }) {
   return (
     <span
       aria-hidden
-      className={`block h-px w-10 ${accent ==="marigold" ? "bg-marigold" : "bg-teal"}`}
+      className={`block h-px w-10 ${accent ==="brass" ? "bg-brass" : "bg-abalone"}`}
     />
   );
 }

@@ -29,7 +29,7 @@ export default async function AdminPage({
     <main className="mx-auto max-w-5xl px-5 py-10">
       <header className="flex flex-wrap items-baseline justify-between gap-4 border-b border-line pb-4">
         <div>
-          <p className="hud text-marigold">borwonpak.com</p>
+          <p className="hud text-brass">borwonpak.com</p>
           <h1 className="mt-2 font-display text-2xl font-semibold">
             สถิติผู้เข้าชม
           </h1>
@@ -41,8 +41,8 @@ export default async function AdminPage({
               href={`/admin?d=${r}`}
               className={`hud border px-3 py-1.5 transition ${
                 r === days
-                  ? "border-marigold text-marigold"
-                  : "border-line text-muted hover:border-marigold hover:text-marigold"
+                  ? "border-brass text-brass"
+                  : "border-line text-muted hover:border-brass hover:text-brass"
               }`}
             >
               {r} วัน
@@ -51,7 +51,7 @@ export default async function AdminPage({
           <form action={signOut}>
             <button
               type="submit"
-              className="hud border border-line px-3 py-1.5 text-muted transition hover:border-marigold hover:text-marigold"
+              className="hud border border-line px-3 py-1.5 text-muted transition hover:border-brass hover:text-brass"
             >
               ออกจากระบบ
             </button>
@@ -106,7 +106,7 @@ function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div className="bg-panel p-5">
       <p className="hud text-muted">{label}</p>
-      <p className="mt-2 font-display text-3xl font-semibold tabular-nums text-marigold">
+      <p className="mt-2 font-display text-3xl font-semibold tabular-nums text-brass">
         {value.toLocaleString()}
       </p>
     </div>
@@ -135,7 +135,7 @@ function Chart({
             title={`${d.day} · ${d.views} ครั้ง · ${d.visitors} คน`}
           >
             <div
-              className="bg-marigold/30 transition group-hover:bg-marigold"
+              className="bg-brass/30 transition group-hover:bg-brass"
               style={{ height: `${(d.views / peak) * 100}%` }}
             />
           </div>
@@ -163,7 +163,7 @@ function Table({ title, rows }: { title: string; rows: Breakdown[] }) {
               {/* The bar is a background layer so long labels stay readable. */}
               <span
                 aria-hidden
-                className="absolute inset-y-0 left-0 bg-teal/15"
+                className="absolute inset-y-0 left-0 bg-abalone/15"
                 style={{ width: `${(r.views / peak) * 100}%` }}
               />
               <span className="relative flex items-baseline justify-between gap-3 px-2 py-1.5 text-sm">

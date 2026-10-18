@@ -28,7 +28,7 @@ export function ThemeToggle({ label }: { label: string }) {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className="grid size-9 place-items-center border border-line text-muted transition hover:border-marigold hover:text-marigold"
+      className="grid size-9 place-items-center border border-line text-muted transition hover:border-brass hover:text-brass"
     >
       <span aria-hidden className="icon-when-light text-base leading-none">
         ☾

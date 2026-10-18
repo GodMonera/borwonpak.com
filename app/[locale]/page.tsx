@@ -6,20 +6,23 @@ import { listPosts } from "@/lib/posts";
 import { ArrowLink } from "@/components/ui";
 import { ProjectCard } from "@/components/project-card";
 import { PostCard } from "@/components/post-card";
-import { Band } from "@/components/hud/band";
-import { Hero, type Chip } from "@/components/hud/hero";
+import { Fret } from "@/components/neck/fret";
+import { Hero } from "@/components/neck/hero";
+import type { Chord } from "@/components/neck/chord-nav";
 import { Reveal } from "@/components/hud/reveal";
 
-/** Facts pulled from the actual work — these float around the wordmark. */
-function heroChips(locale: Locale): Chip[] {
-  const th = locale === "th";
+/**
+ * Every destination is a chord in standard tuning, low string first. Open
+ * shapes were chosen deliberately: they ring longer and sound better on a
+ * synthesised pluck than anything barred.
+ */
+function navChords(locale: Locale, copy: ReturnType<typeof t>): Chord[] {
   return [
-    { value: "1st", label: th ? "เกียรตินิยม มช." : "class honours, CMU" },
-    { value: `${projects.length}`, label: th ? "โปรเจกต์" : "projects shipped" },
-    { value: "95+", label: th ? "หัวข้อใน README" : "README sections" },
-    { value: "11", label: th ? "บั๊กที่ audit เจอ" : "bugs found in audit" },
-    { value: "10K", label: th ? "แถว Excel ที่ล้าง" : "rows cleansed" },
-    { value: "3", label: th ? "แอปบน LINE" : "apps on LINE" },
+    { name: "Em7", label: copy.nav.work, href: `/${locale}/work`, notes: [40, 47, 52, 55, 59, 64] },
+    { name: "Am", label: copy.nav.blog, href: `/${locale}/blog`, notes: [45, 52, 57, 60, 64] },
+    { name: "G", label: copy.nav.lab, href: `/${locale}/lab`, notes: [43, 47, 50, 55, 59, 67] },
+    { name: "D", label: copy.nav.now, href: `/${locale}/now`, notes: [50, 57, 62, 66] },
+    { name: "C", label: copy.nav.ask, href: `/${locale}/ask`, notes: [48, 52, 55, 60, 64] },
   ];
 }
 
@@ -44,17 +47,15 @@ export default async function HomePage({
         kicker={copy.home.kicker}
         tagline={copy.home.tagline}
         intro={copy.home.intro}
-        ctaWork={copy.home.ctaWork}
-        ctaAsk={copy.home.ctaAsk}
-        chips={heroChips(locale)}
+        chords={navChords(locale, copy)}
+        playHint={
+          th
+            ? "กดคอร์ดไหนก็ได้ — มีเสียงจริง ไม่มีไฟล์เสียงสักไฟล์"
+            : "Press any chord — it really sounds, with no audio files"
+        }
       />
 
-      <Band
-        index="01"
-        title={copy.home.featured}
-        meta={copy.home.featuredSub}
-        id="work"
-      >
+      <Fret position={3} title={copy.home.featured} meta={copy.home.featuredSub} id="work">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((project, i) => (
             <ProjectCard
@@ -69,15 +70,10 @@ export default async function HomePage({
         <div className="mt-8">
           <ArrowLink href={`/${locale}/work`}>{copy.common.allWork}</ArrowLink>
         </div>
-      </Band>
+      </Fret>
 
       {posts.length > 0 && (
-        <Band
-          index="02"
-          title={copy.home.latestPosts}
-          meta={copy.home.latestPostsSub}
-          id="writing"
-        >
+        <Fret position={5} title={copy.home.latestPosts} meta={copy.home.latestPostsSub} id="writing">
           <div className="border-t border-line">
             {posts.map((post, i) => (
               <PostCard
@@ -92,11 +88,11 @@ export default async function HomePage({
           <div className="mt-8">
             <ArrowLink href={`/${locale}/blog`}>{copy.common.allPosts}</ArrowLink>
           </div>
-        </Band>
+        </Fret>
       )}
 
-      <Band
-        index="03"
+      <Fret
+        position={7}
         title={copy.home.nowTitle}
         meta={th ? "สถานะปัจจุบัน" : "Current status"}
         id="now"
@@ -104,8 +100,8 @@ export default async function HomePage({
         <dl className="grid gap-px border border-line bg-line sm:grid-cols-2">
           {nowItems.map((item, i) => (
             <Reveal key={item.heading.en} delay={i * 80} className="bg-panel p-6">
-              <dt className="hud flex items-center gap-2 text-teal">
-                <span aria-hidden className="inline-block size-1.5 bg-teal" />
+              <dt className="hud flex items-center gap-2 text-abalone">
+                <span aria-hidden className="inlay" />
                 {item.heading[locale]}
               </dt>
               <dd className="mt-3 text-sm leading-relaxed text-muted">
@@ -117,22 +113,17 @@ export default async function HomePage({
         <div className="mt-8">
           <ArrowLink href={`/${locale}/now`}>{copy.nav.now}</ArrowLink>
         </div>
-      </Band>
+      </Fret>
 
-      <Band
-        index="04"
+      <Fret
+        position={12}
         title={copy.home.beyondCode}
         meta={copy.home.beyondCodeSub}
         id="beyond"
       >
         <div className="grid gap-px border border-line bg-line sm:grid-cols-3">
           {[
-            {
-              href: `/${locale}/lab`,
-              glyph: "⚗",
-              title: copy.nav.lab,
-              body: copy.lab.sub,
-            },
+            { href: `/${locale}/lab`, glyph: "⚗", title: copy.nav.lab, body: copy.lab.sub },
             {
               href: `/${locale}/music`,
               glyph: "♪",
@@ -151,20 +142,18 @@ export default async function HomePage({
                 href={card.href}
                 className="group flex h-full flex-col bg-panel p-6 transition hover:bg-panel-2"
               >
-                <span aria-hidden className="text-2xl text-marigold">
+                <span aria-hidden className="text-2xl text-brass">
                   {card.glyph}
                 </span>
-                <h3 className="mt-4 font-display text-lg font-semibold transition group-hover:text-marigold">
+                <h3 className="mt-4 font-display text-lg font-semibold transition group-hover:text-brass">
                   {card.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">
-                  {card.body}
-                </p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{card.body}</p>
               </Link>
             </Reveal>
           ))}
         </div>
-      </Band>
+      </Fret>
     </>
   );
 }

@@ -54,7 +54,7 @@ export default async function LoginPage({
   return (
     <main className="grid min-h-dvh place-items-center px-5">
       <div className="w-full max-w-sm">
-        <p className="hud text-marigold">borwonpak.com</p>
+        <p className="hud text-brass">borwonpak.com</p>
         <h1 className="mt-3 font-display text-2xl font-semibold">
           สถิติผู้เข้าชม
         </h1>
@@ -70,16 +70,16 @@ export default async function LoginPage({
               type="password"
               autoFocus
               autoComplete="current-password"
-              className="border border-line bg-panel px-3.5 py-2.5 text-sm outline-none focus:border-marigold"
+              className="border border-line bg-panel px-3.5 py-2.5 text-sm outline-none focus:border-brass"
             />
             <button
               type="submit"
-              className="mt-2 border border-marigold bg-marigold px-5 py-2.5 font-display text-sm font-semibold uppercase tracking-wider text-[#08090b] transition hover:bg-transparent hover:text-marigold"
+              className="mt-2 border border-brass bg-brass px-5 py-2.5 font-display text-sm font-semibold uppercase tracking-wider text-[#191310] transition hover:bg-transparent hover:text-brass"
             >
               เข้าสู่ระบบ
             </button>
             {message && (
-              <p className="mt-2 text-sm text-marigold" role="alert">
+              <p className="mt-2 text-sm text-brass" role="alert">
                 {message}
               </p>
             )}

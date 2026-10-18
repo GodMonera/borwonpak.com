@@ -21,7 +21,7 @@ export function Band({
     <section id={id} className="border-t border-line">
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3">
         <h2 className="hud text-ink">
-          <span className="text-marigold">{index}</span>
+          <span className="text-brass">{index}</span>
           <span className="mx-2 text-line-bright">/</span>
           {title}
         </h2>

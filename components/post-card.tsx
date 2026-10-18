@@ -21,12 +21,12 @@ export function PostCard({
         href={`/${locale}/blog/${post.slug}`}
         className="group grid gap-2 border-b border-line py-6 transition hover:bg-panel sm:grid-cols-[4rem_1fr_auto] sm:items-baseline sm:gap-6 sm:px-2"
       >
-        <span className="hud text-marigold">
+        <span className="hud text-brass">
           {String(index).padStart(2, "0")}
         </span>
 
         <div>
-          <h3 className="font-display text-lg font-semibold leading-snug transition group-hover:text-marigold">
+          <h3 className="font-display text-lg font-semibold leading-snug transition group-hover:text-brass">
             {post.title}
           </h3>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">

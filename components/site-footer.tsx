@@ -23,7 +23,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
               href={link.href}
               target="_blank"
               rel="noreferrer noopener"
-              className="border-b border-r border-line px-5 py-5 text-muted transition hover:bg-panel hover:text-marigold"
+              className="border-b border-r border-line px-5 py-5 text-muted transition hover:bg-panel hover:text-brass"
             >
               <span className="hud">{link.label} ↗</span>
             </a>
@@ -31,7 +31,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             <Link
               key={link.label}
               href={link.href}
-              className="border-b border-r border-line px-5 py-5 text-muted transition hover:bg-panel hover:text-marigold"
+              className="border-b border-r border-line px-5 py-5 text-muted transition hover:bg-panel hover:text-brass"
             >
               <span className="hud">{link.label}</span>
             </Link>
@@ -45,7 +45,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         </p>
         <a
           href={`mailto:${site.email}`}
-          className="hud text-muted transition hover:text-marigold"
+          className="hud text-muted transition hover:text-brass"
         >
           {site.email}
         </a>

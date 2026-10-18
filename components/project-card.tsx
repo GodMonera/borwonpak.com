@@ -20,16 +20,16 @@ export function ProjectCard({
     <Reveal delay={delay} className="h-full">
       <Link
         href={`/${locale}/work/${project.slug}`}
-        className="ticked group flex h-full flex-col gap-3 border border-line bg-panel p-5 transition hover:border-marigold hover:bg-panel-2"
+        className="ticked group flex h-full flex-col gap-3 border border-line bg-panel p-5 transition hover:border-brass hover:bg-panel-2"
       >
         <div className="flex items-baseline justify-between gap-3">
-          <span className="hud text-marigold">
+          <span className="hud text-brass">
             {String(index).padStart(2, "0")}
           </span>
           <span className="hud text-muted">{project.year}</span>
         </div>
 
-        <h3 className="font-display text-xl font-semibold leading-tight transition group-hover:text-marigold">
+        <h3 className="font-display text-xl font-semibold leading-tight transition group-hover:text-brass">
           {project.title}
         </h3>
 
@@ -44,10 +44,10 @@ export function ProjectCard({
           {project.stack.length > 4 && <Tag>+{project.stack.length - 4}</Tag>}
         </div>
 
-        <p className="hud flex items-center gap-2 border-t border-line pt-3 text-teal">
+        <p className="hud flex items-center gap-2 border-t border-line pt-3 text-abalone">
           <span
             aria-hidden
-            className="inline-block size-1.5 rounded-full bg-teal"
+            className="inline-block size-1.5 rounded-full bg-abalone"
           />
           {project.status[locale]}
         </p>

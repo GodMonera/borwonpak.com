@@ -132,8 +132,8 @@ export function Fretboard({ locale }: { locale: Locale }) {
             key={c.name}
             type="button"
             onClick={() => setIndex(i)}
-            className={`border px-2.5 py-1 font-mono text-xs transition ${i === index ? "border-marigold text-marigold"
-                : "border-line text-muted hover:border-marigold hover:text-marigold"
+            className={`border px-2.5 py-1 font-mono text-xs transition ${i === index ? "border-brass text-brass"
+                : "border-line text-muted hover:border-brass hover:text-brass"
             }`}
           >
             {c.name}
@@ -188,7 +188,7 @@ export function Fretboard({ locale }: { locale: Locale }) {
                   y={y + 4}
                   textAnchor="middle"
                   fontSize="11"
-                  fill={fret < 0 ? "var(--muted)" : "var(--teal)"}
+                  fill={fret < 0 ? "var(--muted)" : "var(--abalone)"}
                   fontFamily="var(--font-mono-code), monospace"
                 >
                   {fret < 0 ? "×" : fret === 0 ? "○" : ""}
@@ -198,7 +198,7 @@ export function Fretboard({ locale }: { locale: Locale }) {
                     cx={left + fretGap * (fret - 0.5)}
                     cy={y}
                     r={8}
-                    fill="var(--marigold)"
+                    fill="var(--brass)"
                   />
                 )}
               </g>
@@ -212,7 +212,7 @@ export function Fretboard({ locale }: { locale: Locale }) {
           <button
             type="button"
             onClick={strum}
-            className="mt-4 bg-marigold px-4 py-2 text-sm font-semibold text-[#0e1116] transition hover:opacity-90"
+            className="mt-4 bg-brass px-4 py-2 text-sm font-semibold text-[#191310] transition hover:opacity-90"
           >
             {locale === "th" ? "▶ ดีดฟัง" : "▶ Strum it"}
           </button>

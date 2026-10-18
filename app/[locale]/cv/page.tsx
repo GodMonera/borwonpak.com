@@ -55,13 +55,13 @@ export default async function CvPage({
                 {item.period}
               </span>
             </div>
-            <p className="text-sm text-teal">
+            <p className="text-sm text-abalone">
               {item.title[locale]} · {item.place[locale]}
             </p>
             <ul className="mt-2 space-y-1.5">
               {item.points[locale].map((point, i) => (
                 <li key={i} className="flex gap-2.5 text-sm leading-relaxed">
-                  <span aria-hidden className="text-marigold">
+                  <span aria-hidden className="text-brass">
                     ▸
                   </span>
                   <span className="text-muted">{point}</span>
@@ -81,7 +81,7 @@ export default async function CvPage({
                 {item.period}
               </span>
             </div>
-            <p className="text-sm text-teal">{item.title[locale]}</p>
+            <p className="text-sm text-abalone">{item.title[locale]}</p>
             {item.note[locale] && (
               <p className="mt-1 text-sm text-muted">{item.note[locale]}</p>
             )}
@@ -124,7 +124,7 @@ function Block({
 }) {
   return (
     <section className="mt-10">
-      <h2 className="mb-4 border-b border-line pb-2 hud text-marigold">
+      <h2 className="mb-4 border-b border-line pb-2 hud text-brass">
         {title}
       </h2>
       {children}

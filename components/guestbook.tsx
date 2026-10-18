@@ -109,7 +109,7 @@ export function Guestbook({
   return (
     <div className="max-w-2xl">
       {state === "done" ? (
-        <p className="border border-marigold bg-panel p-5 text-sm">
+        <p className="border border-brass bg-panel p-5 text-sm">
           {copy.thanks}
         </p>
       ) : (
@@ -120,7 +120,7 @@ export function Guestbook({
             maxLength={60}
             placeholder={copy.namePlaceholder}
             aria-label={copy.namePlaceholder}
-            className="w-full border border-line bg-panel px-3.5 py-2.5 text-sm outline-none focus:border-marigold"
+            className="w-full border border-line bg-panel px-3.5 py-2.5 text-sm outline-none focus:border-brass"
           />
           <textarea
             value={message}
@@ -129,7 +129,7 @@ export function Guestbook({
             rows={4}
             placeholder={copy.messagePlaceholder}
             aria-label={copy.messagePlaceholder}
-            className="w-full resize-y border border-line bg-panel px-3.5 py-2.5 text-sm outline-none focus:border-marigold"
+            className="w-full resize-y border border-line bg-panel px-3.5 py-2.5 text-sm outline-none focus:border-brass"
           />
 
           {/* Honeypot — hidden from people, irresistible to bots. */}
@@ -151,13 +151,13 @@ export function Guestbook({
             <button
               type="submit"
               disabled={state === "sending"}
-              className="bg-marigold px-5 py-2 text-sm font-semibold text-[#0e1116] transition hover:opacity-90 disabled:opacity-50"
+              className="bg-brass px-5 py-2 text-sm font-semibold text-[#191310] transition hover:opacity-90 disabled:opacity-50"
             >
               {state === "sending" ? copy.submitting : copy.submit}
             </button>
           </div>
 
-          {error && <p className="text-sm text-marigold">{error}</p>}
+          {error && <p className="text-sm text-brass">{error}</p>}
         </form>
       )}
 

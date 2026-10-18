@@ -112,7 +112,7 @@ export function SmartBin({ locale }: { locale: Locale }) {
                 width={116}
                 height={13}
                 rx={4}
-                fill="var(--marigold)"
+                fill="var(--brass)"
               />
             </g>
 
@@ -130,7 +130,7 @@ export function SmartBin({ locale }: { locale: Locale }) {
               y={186 - (contentCm / BIN_DEPTH_CM) * 118}
               width={76}
               height={(contentCm / BIN_DEPTH_CM) * 118}
-              fill={full ? "var(--marigold)" : "var(--teal)"}
+              fill={full ? "var(--brass)" : "var(--abalone)"}
               opacity={0.35}
             />
 
@@ -139,7 +139,7 @@ export function SmartBin({ locale }: { locale: Locale }) {
               cx={80}
               cy={Math.max(6, 40 - (OPEN_CM / Math.max(distance, 1)) * 26)}
               r={6}
-              fill="var(--teal)"
+              fill="var(--abalone)"
               opacity={distance <= OPEN_CM ? 1 : 0.35}
             />
           </svg>
@@ -157,7 +157,7 @@ export function SmartBin({ locale }: { locale: Locale }) {
               max={80}
               value={distance}
               onChange={(e) => onDistance(Number(e.target.value))}
-              className="w-full accent-[var(--marigold)]"
+              className="w-full accent-[var(--brass)]"
             />
           </label>
 
@@ -174,7 +174,7 @@ export function SmartBin({ locale }: { locale: Locale }) {
               max={BIN_DEPTH_CM}
               value={contentCm}
               onChange={(e) => onContent(Number(e.target.value))}
-              className="w-full accent-[var(--marigold)]"
+              className="w-full accent-[var(--brass)]"
             />
           </label>
 
@@ -211,12 +211,12 @@ export function SmartBin({ locale }: { locale: Locale }) {
 function Led({ on, label }: { on: boolean; label: string }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 border px-2 py-1 uppercase tracking-wider ${on ? "border-marigold text-marigold" : "border-line text-muted"
+      className={`inline-flex items-center gap-1.5 border px-2 py-1 uppercase tracking-wider ${on ? "border-brass text-brass" : "border-line text-muted"
       }`}
     >
       <span
         aria-hidden
-        className={`size-1.5 rounded-full ${on ? "bg-marigold" : "bg-line"}`}
+        className={`size-1.5 rounded-full ${on ? "bg-brass" : "bg-line"}`}
       />
       {label}
     </span>

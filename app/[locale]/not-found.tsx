@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div className="py-16">
-      <p className="font-mono text-sm text-marigold">404</p>
+      <p className="font-mono text-sm text-brass">404</p>
       <h1 className="mt-3 text-3xl font-semibold tracking-tight">
         ไม่พบหน้านี้ / Page not found
       </h1>
@@ -15,13 +15,13 @@ export default function NotFound() {
       <div className="mt-8 flex gap-4">
         <Link
           href="/th"
-          className="border border-line px-4 py-2 text-sm transition hover:border-marigold hover:text-marigold"
+          className="border border-line px-4 py-2 text-sm transition hover:border-brass hover:text-brass"
         >
           หน้าแรก
         </Link>
         <Link
           href="/en"
-          className="border border-line px-4 py-2 text-sm transition hover:border-marigold hover:text-marigold"
+          className="border border-line px-4 py-2 text-sm transition hover:border-brass hover:text-brass"
         >
           Home
         </Link>

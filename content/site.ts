@@ -34,7 +34,7 @@ export type Project = {
   links?: { label: I18nText; href: string }[];
   /** true when the repository is private — we say so instead of linking. */
   privateRepo?: boolean;
-  accent: "marigold" | "teal";
+  accent: "brass" | "abalone";
 };
 
 export const projects: Project[] = [
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     },
     featured: true,
     privateRepo: true,
-    accent: "marigold",
+    accent: "brass",
   },
   {
     slug: "cctv-tracking-scmc",
@@ -141,7 +141,7 @@ export const projects: Project[] = [
     },
     featured: true,
     privateRepo: true,
-    accent: "teal",
+    accent: "abalone",
   },
   {
     slug: "water-pump-management-scmc",
@@ -190,7 +190,7 @@ export const projects: Project[] = [
     },
     featured: true,
     privateRepo: true,
-    accent: "marigold",
+    accent: "brass",
   },
   {
     slug: "asset-management-scmc",
@@ -243,7 +243,7 @@ export const projects: Project[] = [
     },
     featured: false,
     privateRepo: true,
-    accent: "teal",
+    accent: "abalone",
   },
   {
     slug: "melon-smart-farm",
@@ -288,7 +288,7 @@ export const projects: Project[] = [
     },
     featured: false,
     privateRepo: true,
-    accent: "teal",
+    accent: "abalone",
   },
   {
     slug: "income-expenses-app",
@@ -325,7 +325,7 @@ export const projects: Project[] = [
     },
     featured: false,
     privateRepo: true,
-    accent: "marigold",
+    accent: "brass",
   },
   {
     slug: "esp32-smart-bin",
@@ -363,7 +363,7 @@ export const projects: Project[] = [
       ],
     },
     featured: false,
-    accent: "teal",
+    accent: "abalone",
   },
   {
     slug: "upbeat",
@@ -397,7 +397,7 @@ export const projects: Project[] = [
       ],
     },
     featured: false,
-    accent: "marigold",
+    accent: "brass",
   },
 ];
 
@@ -575,7 +575,7 @@ export const gaming: {
   game: string;
   role: I18nText;
   takeaway: I18nText;
-  accent: "marigold" | "teal";
+  accent: "brass" | "abalone";
 }[] = [
   {
     game: "League of Legends",
@@ -584,7 +584,7 @@ export const gaming: {
       th: "สอนเรื่องการยอมเสียเปรียบตรงหนึ่งเพื่อได้เปรียบอีกตรง — เหมือนตอนตัดสินใจว่าจะ optimize อะไรในระบบ",
       en: "Taught me to give up ground in one lane to win another — the same trade-off as deciding what to optimise in a system.",
     },
-    accent: "marigold",
+    accent: "brass",
   },
   {
     game: "FPS (Valorant / CS)",
@@ -593,7 +593,7 @@ export const gaming: {
       th: "การสื่อสารสั้น ชัด และตรงเวลา สำคัญกว่าการเล็งแม่น",
       en: "Short, clear, well-timed communication beats raw aim.",
     },
-    accent: "teal",
+    accent: "abalone",
   },
 ];
 

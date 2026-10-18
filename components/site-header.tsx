@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { switchLocalePath, type Locale } from "@/lib/i18n";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { SoundToggle } from "@/components/neck/sound-toggle";
 
 type NavItem = { href: string; label: string };
 
@@ -52,7 +53,7 @@ export function SiteHeader({
     <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur-md">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:bg-marigold focus:px-3 focus:py-1.5 focus:text-sm focus:font-medium focus:text-[#08090b]"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:bg-brass focus:px-3 focus:py-1.5 focus:text-sm focus:font-medium focus:text-[#191310]"
       >
         {skipLabel}
       </a>
@@ -65,7 +66,7 @@ export function SiteHeader({
         >
           <span
             aria-hidden
-            className="grid size-6 place-items-center border border-marigold font-display text-[11px] font-bold text-marigold"
+            className="grid size-6 place-items-center border border-brass font-display text-[11px] font-bold text-brass"
           >
             B
           </span>
@@ -77,7 +78,7 @@ export function SiteHeader({
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center border-r border-line px-4 transition hover:bg-panel ${isActive(item.href) ? "bg-panel text-marigold"
+              className={`flex items-center border-r border-line px-4 transition hover:bg-panel ${isActive(item.href) ? "bg-panel text-brass"
                   : "text-muted hover:text-ink"
               }`}
             >
@@ -89,7 +90,7 @@ export function SiteHeader({
         <div className="ml-auto flex items-stretch">
           <Link
             href={`/${locale}/ask`}
-            className="hidden items-center border-l border-line px-4 text-marigold transition hover:bg-marigold hover:text-[#08090b] sm:flex"
+            className="hidden items-center border-l border-line px-4 text-brass transition hover:bg-brass hover:text-[#191310] sm:flex"
           >
             <span className="hud">{askLabel}</span>
           </Link>
@@ -97,12 +98,13 @@ export function SiteHeader({
           <Link
             href={switchLocalePath(pathname, other)}
             hrefLang={other}
-            className="flex items-center border-l border-line px-4 text-muted transition hover:bg-panel hover:text-marigold"
+            className="flex items-center border-l border-line px-4 text-muted transition hover:bg-panel hover:text-brass"
           >
             <span className="hud">{other}</span>
           </Link>
 
-          <div className="flex items-center border-l border-line px-3">
+          <div className="flex items-center gap-1 border-l border-line px-2">
+            <SoundToggle label={locale === "th" ? "เปิด/ปิดเสียง" : "Toggle sound"} />
             <ThemeToggle label={toggleThemeLabel} />
           </div>
 
@@ -112,7 +114,7 @@ export function SiteHeader({
             aria-expanded={open}
             aria-controls="site-menu"
             aria-label="Menu"
-            className="flex items-center border-l border-line px-4 text-muted transition hover:bg-panel hover:text-marigold"
+            className="flex items-center border-l border-line px-4 text-muted transition hover:bg-panel hover:text-brass"
           >
             <span aria-hidden className="text-sm leading-none">
               {open ? "✕" : "☰"}
@@ -128,7 +130,7 @@ export function SiteHeader({
               <li key={item.href} className="border-b border-r border-line">
                 <Link
                   href={item.href}
-                  className={`flex items-baseline gap-2 px-5 py-4 transition hover:bg-panel-2 ${isActive(item.href) ? "text-marigold" : "text-muted hover:text-ink"
+                  className={`flex items-baseline gap-2 px-5 py-4 transition hover:bg-panel-2 ${isActive(item.href) ? "text-brass" : "text-muted hover:text-ink"
                   }`}
                 >
                   <span className="hud text-line-bright">

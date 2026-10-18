@@ -46,7 +46,7 @@ export default async function ProjectPage({
     <article>
       <Link
         href={`/${locale}/work`}
-        className="font-mono text-xs text-muted hover:text-marigold"
+        className="font-mono text-xs text-muted hover:text-brass"
       >
         ← {copy.work.title}
       </Link>
@@ -63,25 +63,25 @@ export default async function ProjectPage({
 
       <dl className="mt-8 grid gap-6 border-b border-line pb-8 sm:grid-cols-3">
         <div>
-          <dt className="hud text-teal">
+          <dt className="hud text-abalone">
             {copy.common.year}
           </dt>
           <dd className="mt-1 text-sm">{project.year}</dd>
         </div>
         <div>
-          <dt className="hud text-teal">
+          <dt className="hud text-abalone">
             {copy.common.role}
           </dt>
           <dd className="mt-1 text-sm">{project.role[locale]}</dd>
         </div>
         <div>
-          <dt className="hud text-teal">
+          <dt className="hud text-abalone">
             {copy.common.status}
           </dt>
           <dd className="mt-1 text-sm">{project.status[locale]}</dd>
         </div>
         <div className="sm:col-span-3">
-          <dt className="hud text-teal">
+          <dt className="hud text-abalone">
             {copy.common.stack}
           </dt>
           <dd className="mt-2 flex flex-wrap gap-1.5">
@@ -99,13 +99,13 @@ export default async function ProjectPage({
       </div>
 
       <section className="mt-10 max-w-2xl border border-line bg-panel p-6">
-        <h2 className="hud text-teal">
+        <h2 className="hud text-abalone">
           {copy.common.highlights}
         </h2>
         <ul className="mt-3 space-y-2">
           {project.highlights[locale].map((item, i) => (
             <li key={i} className="flex gap-3 text-sm leading-relaxed">
-              <span aria-hidden className="text-marigold">
+              <span aria-hidden className="text-brass">
                 ▸
               </span>
               <span>{item}</span>

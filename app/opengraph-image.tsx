@@ -19,7 +19,7 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0e1116",
+          background: "#191310",
           color: "#e8e6e1",
           padding: "72px 80px",
           fontFamily: "sans-serif",

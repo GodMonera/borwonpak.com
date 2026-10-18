@@ -87,7 +87,7 @@ function Experiment({
   return (
     <section>
       <div className="mb-4 flex gap-4">
-        <span className="font-mono text-sm text-marigold">{n}</span>
+        <span className="font-mono text-sm text-brass">{n}</span>
         <div>
           <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
           <p className="mt-1 max-w-2xl text-sm text-muted">{blurb}</p>

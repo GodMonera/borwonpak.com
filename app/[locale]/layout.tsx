@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Chakra_Petch, IBM_Plex_Sans_Thai, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Sans_Thai, JetBrains_Mono, Kanit } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { site } from "@/content/site";
@@ -7,15 +7,15 @@ import { isLocale, locales, t, type Locale } from "@/lib/i18n";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeScript } from "@/components/theme-script";
-import { ScrollRuler } from "@/components/hud/scroll-ruler";
+import { Strings } from "@/components/neck/strings";
 import { AnalyticsBeacon } from "@/components/analytics-beacon";
 
-// Squared-off technical face that covers Thai and Latin from one family, so
-// headings keep the same personality in both languages.
-const display = Chakra_Petch({
+// Kanit covers Thai and Latin from one family and goes genuinely heavy, which
+// is what the wordmark needs — it should read like the badge on an amp.
+const display = Kanit({
   variable: "--font-display",
   subsets: ["thai", "latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -35,7 +35,7 @@ const mono = JetBrains_Mono({
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#f4f3ef" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e1116" },
+    { media: "(prefers-color-scheme: dark)", color: "#191310" },
   ],
 };
 
@@ -127,8 +127,8 @@ export default async function LocaleLayout({
           skipLabel={copy.common.skipToContent}
         />
         <AnalyticsBeacon locale={locale} />
-        <ScrollRuler />
-        <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-5 xl:pr-20">
+        <Strings />
+        <main id="main" className="relative z-10 mx-auto w-full max-w-5xl flex-1 px-5">
           {children}
         </main>
         <SiteFooter locale={locale} />

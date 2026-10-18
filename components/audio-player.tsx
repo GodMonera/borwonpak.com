@@ -45,7 +45,7 @@ export function AudioPlayer({
         onClick={toggle}
         disabled={!src}
         aria-label={playing ? `Pause ${title}` : `Play ${title}`}
-        className="grid size-11 shrink-0 place-items-center rounded-full border border-line text-marigold transition enabled:hover:border-marigold disabled:cursor-not-allowed disabled:opacity-40"
+        className="grid size-11 shrink-0 place-items-center rounded-full border border-line text-brass transition enabled:hover:border-brass disabled:cursor-not-allowed disabled:opacity-40"
       >
         <span aria-hidden className="text-sm leading-none">
           {playing ? "❚❚" : "▶"}
@@ -60,7 +60,7 @@ export function AudioPlayer({
         {src && (
           <div className="mt-2 h-0.5 w-full overflow-hidden bg-line">
             <div
-              className="h-full bg-marigold transition-[width] duration-200"
+              className="h-full bg-brass transition-[width] duration-200"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -69,7 +69,7 @@ export function AudioPlayer({
 
       <span
         aria-hidden
-        className="shrink-0 hud text-teal"
+        className="shrink-0 hud text-abalone"
       >
         {instrument}
       </span>

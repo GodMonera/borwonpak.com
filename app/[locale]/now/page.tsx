@@ -36,7 +36,7 @@ export default async function NowPage({
       <div className="max-w-2xl space-y-8">
         {nowItems.map((item) => (
           <section key={item.heading.en}>
-            <h2 className="hud text-teal">
+            <h2 className="hud text-abalone">
               {item.heading[locale]}
             </h2>
             <p className="mt-2 leading-relaxed text-muted">

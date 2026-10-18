@@ -49,7 +49,7 @@ export default async function PostPage({
     <article className="max-w-2xl">
       <Link
         href={`/${locale}/blog`}
-        className="font-mono text-xs text-muted hover:text-marigold"
+        className="font-mono text-xs text-muted hover:text-brass"
       >
         ← {copy.blog.title}
       </Link>

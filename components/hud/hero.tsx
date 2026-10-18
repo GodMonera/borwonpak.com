@@ -57,14 +57,14 @@ export function Hero({
       >
         <defs>
           <linearGradient id="arcA" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="var(--marigold)" stopOpacity="0" />
-            <stop offset="50%" stopColor="var(--marigold)" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="var(--marigold)" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--brass)" stopOpacity="0" />
+            <stop offset="50%" stopColor="var(--brass)" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="var(--brass)" stopOpacity="0" />
           </linearGradient>
           <linearGradient id="arcB" x1="1" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--teal)" stopOpacity="0" />
-            <stop offset="50%" stopColor="var(--teal)" stopOpacity="0.5" />
-            <stop offset="100%" stopColor="var(--teal)" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--abalone)" stopOpacity="0" />
+            <stop offset="50%" stopColor="var(--abalone)" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="var(--abalone)" stopOpacity="0" />
           </linearGradient>
         </defs>
         <ellipse
@@ -127,7 +127,7 @@ export function Hero({
 
       {/* Centre column */}
       <div className="relative mx-auto flex max-w-3xl flex-col items-center py-24 text-center sm:py-32">
-        <Reveal as="p" className="hud text-marigold">
+        <Reveal as="p" className="hud text-brass">
           {kicker}
         </Reveal>
 
@@ -156,13 +156,13 @@ export function Hero({
         <Reveal delay={320} className="mt-9 flex flex-wrap justify-center gap-3">
           <Link
             href={`/${locale}/work`}
-            className="border border-marigold bg-marigold px-6 py-3 font-display text-sm font-semibold uppercase tracking-wider text-[#08090b] transition hover:bg-transparent hover:text-marigold"
+            className="border border-brass bg-brass px-6 py-3 font-display text-sm font-semibold uppercase tracking-wider text-[#191310] transition hover:bg-transparent hover:text-brass"
           >
             {ctaWork}
           </Link>
           <Link
             href={`/${locale}/ask`}
-            className="border border-line-bright px-6 py-3 font-display text-sm font-semibold uppercase tracking-wider transition hover:border-marigold hover:text-marigold"
+            className="border border-line-bright px-6 py-3 font-display text-sm font-semibold uppercase tracking-wider transition hover:border-brass hover:text-brass"
           >
             {ctaAsk}
           </Link>
@@ -177,7 +177,7 @@ export function Hero({
             href={site.github}
             target="_blank"
             rel="noreferrer noopener"
-            className="pointer-events-auto transition hover:text-marigold"
+            className="pointer-events-auto transition hover:text-brass"
           >
             @{site.githubHandle}
           </a>
@@ -186,7 +186,7 @@ export function Hero({
           <span className="text-line-bright">·</span>
           <a
             href={`mailto:${site.email}`}
-            className="pointer-events-auto transition hover:text-marigold"
+            className="pointer-events-auto transition hover:text-brass"
           >
             {site.email}
           </a>

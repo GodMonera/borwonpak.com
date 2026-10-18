@@ -136,8 +136,8 @@ export function PayrollCalculator({ locale }: { locale: Locale }) {
                   key={k}
                   type="button"
                   onClick={() => setKind(k)}
-                  className={`border px-3 py-1.5 text-xs transition ${kind === k ? "border-marigold text-marigold"
-                      : "border-line text-muted hover:border-marigold"
+                  className={`border px-3 py-1.5 text-xs transition ${kind === k ? "border-brass text-brass"
+                      : "border-line text-muted hover:border-brass"
                   }`}
                 >
                   {k === "individual"
@@ -160,7 +160,7 @@ export function PayrollCalculator({ locale }: { locale: Locale }) {
                 max={8}
                 value={students}
                 onChange={(e) => setStudents(Number(e.target.value))}
-                className="w-full accent-[var(--marigold)]"
+                className="w-full accent-[var(--brass)]"
               />
             </Field>
           )}
@@ -173,7 +173,7 @@ export function PayrollCalculator({ locale }: { locale: Locale }) {
               step={0.5}
               value={hours}
               onChange={(e) => setHours(Number(e.target.value))}
-              className="w-full accent-[var(--marigold)]"
+              className="w-full accent-[var(--brass)]"
             />
           </Field>
 
@@ -195,14 +195,14 @@ export function PayrollCalculator({ locale }: { locale: Locale }) {
         </div>
 
         <div>
-          <p className="hud text-teal">
+          <p className="hud text-abalone">
             {th ? "ค่าสอนที่คำนวณได้" : "Calculated pay"}
           </p>
-          <p className="mt-1 font-mono text-4xl font-semibold text-marigold tabular-nums">
+          <p className="mt-1 font-mono text-4xl font-semibold text-brass tabular-nums">
             ฿{result.total.toLocaleString()}
           </p>
 
-          <p className="mt-6 hud text-teal">
+          <p className="mt-6 hud text-abalone">
             {th ? "กฎที่ถูกใช้" : "Rules applied"}
           </p>
           <ol className="mt-2 space-y-2.5">
@@ -257,7 +257,7 @@ function Toggle({
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className="size-4 accent-[var(--marigold)]"
+        className="size-4 accent-[var(--brass)]"
       />
       <span className="text-muted">{label}</span>
     </label>

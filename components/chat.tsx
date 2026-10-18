@@ -105,7 +105,7 @@ export function Chat({ locale, copy }: { locale: Locale; copy: Copy }) {
     <div className="max-w-2xl">
       {messages.length === 0 ? (
         <div className="border border-line bg-panel p-5">
-          <p className="hud text-teal">
+          <p className="hud text-abalone">
             {copy.suggestions}
           </p>
           <ul className="mt-3 space-y-2">
@@ -114,7 +114,7 @@ export function Chat({ locale, copy }: { locale: Locale; copy: Copy }) {
                 <button
                   type="button"
                   onClick={() => ask(starter)}
-                  className="text-left text-sm text-muted transition hover:text-marigold"
+                  className="text-left text-sm text-muted transition hover:text-brass"
                 >
                   → {starter}
                 </button>
@@ -126,7 +126,7 @@ export function Chat({ locale, copy }: { locale: Locale; copy: Copy }) {
         <div className="space-y-6">
           {messages.map((m, i) => (
             <div key={i}>
-              <p className="mb-1.5 hud text-teal">
+              <p className="mb-1.5 hud text-abalone">
                 {m.role === "user"
                   ? locale === "th"
                     ? "คุณ"
@@ -161,13 +161,13 @@ export function Chat({ locale, copy }: { locale: Locale; copy: Copy }) {
           placeholder={copy.placeholder}
           aria-label={copy.placeholder}
           disabled={enabled === null}
-          className="flex-1 border border-line bg-panel px-3.5 py-2.5 text-sm outline-none focus:border-marigold disabled:opacity-50"
+          className="flex-1 border border-line bg-panel px-3.5 py-2.5 text-sm outline-none focus:border-brass disabled:opacity-50"
         />
         {streaming ? (
           <button
             type="button"
             onClick={() => abortRef.current?.abort()}
-            className="border border-line px-4 py-2 text-sm font-medium transition hover:border-marigold hover:text-marigold"
+            className="border border-line px-4 py-2 text-sm font-medium transition hover:border-brass hover:text-brass"
           >
             {copy.stop}
           </button>
@@ -175,7 +175,7 @@ export function Chat({ locale, copy }: { locale: Locale; copy: Copy }) {
           <button
             type="submit"
             disabled={!input.trim()}
-            className="bg-marigold px-5 py-2 text-sm font-semibold text-[#0e1116] transition hover:opacity-90 disabled:opacity-40"
+            className="bg-brass px-5 py-2 text-sm font-semibold text-[#191310] transition hover:opacity-90 disabled:opacity-40"
           >
             {copy.send}
           </button>
@@ -190,7 +190,7 @@ export function Chat({ locale, copy }: { locale: Locale; copy: Copy }) {
           <button
             type="button"
             onClick={() => setMessages([])}
-            className="text-xs text-muted underline underline-offset-4 hover:text-marigold"
+            className="text-xs text-muted underline underline-offset-4 hover:text-brass"
           >
             {copy.clear}
           </button>
