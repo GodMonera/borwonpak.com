@@ -1,9 +1,31 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, isLocale, locales } from "@/lib/i18n";
 
-/** Send "/" to the visitor's best-matching locale; everything else passes through. */
+const ADMIN_PREFIX = "admin.";
+
+/**
+ * Two jobs:
+ *   1. admin.<domain> serves the private dashboard that lives at /admin.
+ *   2. "/" sends the visitor to whichever locale their browser asked for.
+ */
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const host = req.headers.get("host") ?? "";
+
+  if (host.startsWith(ADMIN_PREFIX)) {
+    // The dashboard's own redirects point at /admin/..., which on this host
+    // would surface as admin.borwonpak.com/admin/login. Normalise the visible
+    // URL by stripping the prefix, then rewrite it back internally below.
+    if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+      const clean = req.nextUrl.clone();
+      clean.pathname = pathname.slice("/admin".length) || "/";
+      return NextResponse.redirect(clean);
+    }
+    const url = req.nextUrl.clone();
+    url.pathname = pathname === "/" ? "/admin" : `/admin${pathname}`;
+    return NextResponse.rewrite(url);
+  }
+
   if (pathname !== "/") return NextResponse.next();
 
   const accept = req.headers.get("accept-language") ?? "";
@@ -18,7 +40,8 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: "/",
+  // Everything except Next's own assets and the files served from /public.
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|icon.svg|.*\\..*).*)"],
 };
 
 export const supportedLocales = locales;

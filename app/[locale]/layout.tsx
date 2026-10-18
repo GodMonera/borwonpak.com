@@ -8,6 +8,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeScript } from "@/components/theme-script";
 import { ScrollRuler } from "@/components/hud/scroll-ruler";
+import { AnalyticsBeacon } from "@/components/analytics-beacon";
 
 // Squared-off technical face that covers Thai and Latin from one family, so
 // headings keep the same personality in both languages.
@@ -125,6 +126,7 @@ export default async function LocaleLayout({
           toggleThemeLabel={copy.common.toggleTheme}
           skipLabel={copy.common.skipToContent}
         />
+        <AnalyticsBeacon locale={locale} />
         <ScrollRuler />
         <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-5 xl:pr-20">
           {children}

@@ -1,9 +1,11 @@
 import { Pool } from "pg";
 
 /**
- * The guestbook is the only thing that needs a database. If DATABASE_URL is
- * absent the site still builds and every other page works — the guestbook
- * just renders in read-only "not configured" mode.
+ * Shared Postgres pool for the guestbook and the visitor analytics.
+ *
+ * If DATABASE_URL is absent the site still builds and every public page works
+ * — the features that need storage render a "not configured" notice instead of
+ * throwing. That is what lets the site deploy before the database exists.
  */
 let pool: Pool | null = null;
 let schemaReady: Promise<void> | null = null;
@@ -12,7 +14,7 @@ export function isDbConfigured() {
   return Boolean(process.env.DATABASE_URL);
 }
 
-function getPool() {
+export function getPool() {
   if (!isDbConfigured()) return null;
   if (!pool) {
     pool = new Pool({
