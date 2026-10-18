@@ -10,6 +10,7 @@ import { Fret } from "@/components/neck/fret";
 import { Hero } from "@/components/neck/hero";
 import type { Chord } from "@/components/neck/chord-nav";
 import { Reveal } from "@/components/hud/reveal";
+import { TechStack } from "@/components/tech-stack";
 
 /**
  * Every destination is a chord in standard tuning, low string first. Open
@@ -113,6 +114,19 @@ export default async function HomePage({
         <div className="mt-8">
           <ArrowLink href={`/${locale}/now`}>{copy.nav.now}</ArrowLink>
         </div>
+      </Fret>
+
+      <Fret
+        position={9}
+        title={th ? "เคยเขียนอะไรมาบ้าง" : "What I've worked with"}
+        meta={
+          th
+            ? "แยกตามว่าเคยใช้จริงแค่ไหน ไม่ใช่กองรวมกัน"
+            : "Split by how far each one actually got"
+        }
+        id="stack"
+      >
+        <TechStack locale={locale} compact />
       </Fret>
 
       <Fret

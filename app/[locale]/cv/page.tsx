@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { cv, site } from "@/content/site";
 import { isLocale, t, type Locale } from "@/lib/i18n";
 import { PrintButton } from "@/components/print-button";
+import { TechStack } from "@/components/tech-stack";
 
 export async function generateMetadata({
   params,
@@ -89,26 +90,17 @@ export default async function CvPage({
         ))}
       </Block>
 
-      <Block title={locale === "th" ? "ทักษะ" : "Skills"}>
-        <dl className="space-y-3">
-          {cv.skills.map((group) => (
-            <div key={group.group.en} className="sm:flex sm:gap-4">
-              <dt className="shrink-0 text-sm font-medium sm:w-48">
-                {group.group[locale]}
-              </dt>
-              <dd className="text-sm text-muted">{group.items.join(" · ")}</dd>
-            </div>
-          ))}
-          <div className="sm:flex sm:gap-4">
-            <dt className="shrink-0 text-sm font-medium sm:w-48">
-              {locale === "th" ? "ภาษา" : "Spoken languages"}
-            </dt>
-            <dd className="text-sm text-muted">
-              {cv.languages
-                .map((l) => `${l.name[locale]} — ${l.level[locale]}`)
-                .join(" · ")}
-            </dd>
-          </div>
+      <Block title={locale === "th" ? "เทคโนโลยีที่เคยใช้" : "Tech I've worked with"}>
+        <TechStack locale={locale} />
+        <dl className="mt-8 sm:flex sm:gap-4">
+          <dt className="shrink-0 text-sm font-medium sm:w-48">
+            {locale === "th" ? "ภาษาพูด" : "Spoken languages"}
+          </dt>
+          <dd className="text-sm text-muted">
+            {cv.languages
+              .map((l) => `${l.name[locale]} — ${l.level[locale]}`)
+              .join(" · ")}
+          </dd>
         </dl>
       </Block>
     </div>

@@ -598,6 +598,229 @@ export const gaming: {
 ];
 
 /* ------------------------------------------------------------------ */
+/* Guitar — pieces being learned                                       */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Saved from a private YouTube playlist. These are *other people's* tutorial
+ * and cover videos that Palm practises from — not recordings of him playing.
+ * The music page has to say so, or a visitor will reasonably assume otherwise.
+ * Each row credits the channel that made it and links to the original.
+ */
+export type LearningTrack = {
+  id: string;
+  title: string;
+  by: string;
+  /** Technique lessons rather than a piece of music. */
+  kind?: "technique";
+};
+
+export const learning: LearningTrack[] = [
+  { id: "mj4Pf-seQWQ", title: "Suzume no Tojimari — OST", by: "vvxoFingerstyleTab" },
+  { id: "pEhMfoQMf7g", title: "Isabella's Lullaby — The Promised Neverland", by: "vvxoFingerstyleTab" },
+  { id: "rQmkw6OqxbA", title: "Sparkle — RADWIMPS (Your Name)", by: "vvxoFingerstyleTab" },
+  { id: "LpThnTh20D4", title: "Merry-Go-Round of Life — Howl's Moving Castle", by: "Kenneth Acoustic" },
+  { id: "WHZzYJ1-aM0", title: "Kataware Doki — RADWIMPS (Your Name)", by: "vvxoFingerstyleTab" },
+  { id: "5RGBc3yKKHw", title: "Kamado Nezuko no Uta — Demon Slayer", by: "vvxoFingerstyleTab" },
+  { id: "gIEN1Zo0uI0", title: "Always With Me — Spirited Away", by: "yunus guitarist" },
+  { id: "CEJfPhdPOKY", title: "Canon in C — Pachelbel", by: "Hei Hei" },
+  { id: "-O3KxQwy1Ac", title: "Let Her Go — Passenger", by: "Kenneth Acoustic" },
+  { id: "fw9BDkfoWFo", title: "Moonlight Densetsu — Sailor Moon", by: "Daniel Asbun" },
+  { id: "y0LfRlCHEV8", title: "Für Elise — Beethoven", by: "Sky Guitar" },
+  { id: "YVK_Of97KsU", title: "Pegasus Fantasy — Saint Seiya", by: "Guitar TAB Master" },
+  { id: "rErxlTp-Qbg", title: "Detective Conan — Main Theme", by: "Daniel Asbun" },
+  { id: "9LCh5JohLog", title: "Careless Whisper — George Michael", by: "Kenneth Acoustic" },
+  { id: "CCVBDCavI_c", title: "Asturias — Albéniz", by: "Sky Guitar" },
+  { id: "n_3Jb8ekqNQ", title: "Nocturne Op.9 No.2 — Chopin", by: "Sky Guitar" },
+  { id: "4CWeBCu_dyE", title: "La Campanella — Liszt", by: "Sky Guitar" },
+  { id: "YKeHzYUN0g4", title: "Fukashigi no Carte — Bunny Girl Senpai", by: "vvxoFingerstyleTab" },
+  { id: "rq3bZzLhyOM", title: "The Second Waltz — Shostakovich", by: "Sky Guitar" },
+  { id: "23GjqKD79t8", title: "Bella Ciao", by: "Sky Guitar" },
+  { id: "51PPbC4snd4", title: "Tárrega — the godfather of guitar", by: "Lucas Brar", kind: "technique" },
+  { id: "Z6wmUU2b834", title: "River Flows in You — Yiruma", by: "Sky Guitar" },
+  { id: "MeuMPS4lAfE", title: "Hedwig's Theme — Harry Potter", by: "Sky Guitar" },
+  { id: "QEcRLZ9ziWI", title: "A Town with an Ocean View — Kiki's Delivery Service", by: "Sky Guitar" },
+  { id: "197nsWu4shE", title: "Lágrima — Tárrega", by: "Sky Guitar" },
+  { id: "J942FDFowk0", title: "Barrios in five levels", by: "Lucas Brar", kind: "technique" },
+  { id: "ocHekkaiv44", title: "He's a Pirate — Pirates of the Caribbean", by: "Sky Guitar" },
+  { id: "muhg8aCLQzU", title: "Capricho Árabe — Tárrega", by: "Sky Guitar" },
+  { id: "YpZLCZxRpW8", title: "Recuerdos de la Alhambra — Tárrega", by: "Sky Guitar" },
+  { id: "K0ODw9QhILQ", title: "Tremolo technique, part I", by: "Brandon Acker", kind: "technique" },
+  { id: "yD-KsEBQSSg", title: "Sor — Etude Op.35 No.17 (Segovia No.6)", by: "Sky Guitar" },
+  { id: "GA4mMvBHTAc", title: "Romance de Amor", by: "Sky Guitar" },
+  { id: "UDZ3RBtM7p0", title: "Adelita — Tárrega", by: "Sky Guitar" },
+  { id: "a_BEnz9_EI0", title: "The Godfather — Love Theme", by: "Sky Guitar" },
+  { id: "MR4yuMh5cBg", title: "The Song of the Golden Dragon — Estas Tonne", by: "Fingerstyle Tab" },
+  { id: "ROvWN_GYcKM", title: "Lara's Theme — Doctor Zhivago", by: "Sky Guitar" },
+  { id: "2TQYeZsObhU", title: "The Last of Us — Main Theme", by: "Sky Guitar" },
+  { id: "H44QB8gslRk", title: "Fly Me to the Moon", by: "Sky Guitar" },
+  { id: "xnS4xjMeePg", title: "Sway", by: "Sky Guitar" },
+  { id: "xx11iGPkj6U", title: "Glimpse of Us — Joji", by: "Sky Guitar" },
+  { id: "rnkwat11O5M", title: "Villa-Lobos in five levels", by: "Lucas Brar", kind: "technique" },
+  { id: "STBx4fWgtZI", title: "Arrietty's Song — The Secret World of Arrietty", by: "IkuinenOnni" },
+  { id: "JYvkb9pmspg", title: "Spanish Guitar — Gary Moore", by: "Sky Guitar" },
+  { id: "mGKO4nWCQdg", title: "The Moon Represents My Heart 月亮代表我的心", by: "Sky Guitar" },
+  { id: "QPjNGlUuL5s", title: "Mariage d'Amour — Richard Clayderman", by: "Sky Guitar" },
+  { id: "-nZsTsP9YRA", title: "Carcassi — Etude Op.60 No.7", by: "Sky Guitar" },
+  { id: "jRFRq1EEID0", title: "One Summer's Day — Spirited Away", by: "Sky Guitar" },
+  { id: "GOPuEiRq-Eg", title: "A Comme Amour — Richard Clayderman", by: "Sky Guitar" },
+  { id: "FBJ7E-2B5Xk", title: "Waves of the Danube", by: "Sky Guitar" },
+  { id: "bKTLgnuoADU", title: "เกากีตาร์ — Awesomeguitar", by: "Awesomeguitar", kind: "technique" },
+  { id: "1tAiMiMfqo0", title: "Mockingbird — Eminem, in five levels", by: "Peter John", kind: "technique" },
+  { id: "aJE9-c_6yYQ", title: "Tarantella Napoletana", by: "Sky Guitar" },
+  { id: "GSpIi8Snxu0", title: "The Worst — Polyphia", by: "Dani Serrano" },
+  { id: "EHB8hhP9MLA", title: "Le Festin — Ratatouille", by: "Sky Guitar" },
+  { id: "tN141N7TgK4", title: "Malagueña", by: "Marcos Kaiser" },
+  { id: "wkOphPPzpwA", title: "The Godfather — Love Theme (classical)", by: "Paola Hermosín" },
+  { id: "fLccSbCEnj8", title: "Malagueña — Tárrega", by: "Dien Le Guitar Pro" },
+  { id: "s8ZApDvym-E", title: "Gran Vals — Tárrega", by: "Sky Guitar" },
+  { id: "eAV3318yNoM", title: "Merry-Go-Round of Life — Howl's Moving Castle", by: "Sky Guitar" },
+  { id: "4XwTHPkuIh8", title: "Moonlight Sonata — Beethoven", by: "The Six Strings" },
+  { id: "doLijBuLc90", title: "Carrying You — Castle in the Sky", by: "Sky Guitar" },
+  { id: "ZHRovCDi5j4", title: "Turkish March — Mozart", by: "Sky Guitar" },
+  { id: "qnnonf9OUoo", title: "Fugue in E minor — J.S. Bach", by: "Dien Le Guitar Pro" },
+  { id: "bw8oUp9geuY", title: "Practising scales the right way", by: "Brandon D'Eon", kind: "technique" },
+  { id: "rTdIWhIzcfk", title: "Waltz Op.69 No.2 in B minor — Chopin", by: "Dien Le Guitar Pro" },
+  { id: "64S_09eeDIs", title: "The Pink Panther Theme", by: "Rainy Day Studio" },
+  { id: "ocrD-eSzrlU", title: "Comptine d'un autre été — Amélie", by: "Mohammad Lameei" },
+  { id: "3Kqgr01x1fI", title: "Malagueña — arpeggio study", by: "chitarprof", kind: "technique" },
+  { id: "8lK9DI-t5SQ", title: "Moonlight Sonata, 3rd movement — Beethoven", by: "Dien Le Guitar Pro" },
+  { id: "Q5-xr6rtO4I", title: "สมฤดี — เด็กเลี้ยงควาย", by: "เด็กเลี้ยงควาย" },
+  { id: "ej95s3triFs", title: "Autumn Leaves — Yenne Lee, Central Park", by: "Yenne Lee" },
+  { id: "7-yzHbkhKnc", title: "Graze the Roof — Plants vs Zombies", by: "Anggar Negarawan Pasaribu" },
+  { id: "uanJs5x26_A", title: "Here With Me — d4vd", by: "Kenneth Acoustic" },
+];
+
+/* ------------------------------------------------------------------ */
+/* Tech stack                                                          */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Split by how far each thing actually got, not by how impressive it sounds.
+ * "Shipped" means it ran in production with real users on it; "built with"
+ * means a finished project; "touched" is honest about the rest. A flat list
+ * that treats all three the same is the thing recruiters have learned to
+ * distrust.
+ */
+export type StackLevel = "shipped" | "built" | "touched";
+
+export const stackLevels: Record<StackLevel, I18nText> = {
+  shipped: { th: "ใช้บน production จริง", en: "Shipped to production" },
+  built: { th: "เคยสร้างโปรเจกต์จนจบ", en: "Built a finished project" },
+  touched: { th: "เคยใช้ / กำลังเรียน", en: "Used, or still learning" },
+};
+
+export const techStack: {
+  group: I18nText;
+  items: { name: string; level: StackLevel }[];
+}[] = [
+  {
+    group: { th: "ภาษา", en: "Languages" },
+    items: [
+      { name: "TypeScript", level: "shipped" },
+      { name: "JavaScript", level: "shipped" },
+      { name: "SQL", level: "shipped" },
+      { name: "HTML / CSS", level: "shipped" },
+      { name: "Java", level: "built" },
+      { name: "Python", level: "built" },
+      { name: "C++", level: "built" },
+      { name: "Bash", level: "touched" },
+    ],
+  },
+  {
+    group: { th: "ฝั่งหน้าบ้าน", en: "Frontend" },
+    items: [
+      { name: "React", level: "shipped" },
+      { name: "Next.js", level: "shipped" },
+      { name: "Tailwind CSS", level: "shipped" },
+      { name: "TanStack Query", level: "shipped" },
+      { name: "shadcn/ui", level: "shipped" },
+      { name: "LINE LIFF", level: "shipped" },
+      { name: "React Native / Expo", level: "built" },
+      { name: "Vite", level: "built" },
+      { name: "Radix UI", level: "built" },
+      { name: "React Router", level: "built" },
+      { name: "JavaFX", level: "built" },
+    ],
+  },
+  {
+    group: { th: "ฝั่งหลังบ้าน", en: "Backend" },
+    items: [
+      { name: "Node.js", level: "shipped" },
+      { name: "Express", level: "shipped" },
+      { name: "Prisma", level: "shipped" },
+      { name: "REST API", level: "shipped" },
+      { name: "NextAuth", level: "shipped" },
+      { name: "Zod", level: "built" },
+      { name: "AWS Lambda", level: "touched" },
+    ],
+  },
+  {
+    group: { th: "ฐานข้อมูลและไฟล์", en: "Data & storage" },
+    items: [
+      { name: "PostgreSQL", level: "shipped" },
+      { name: "Prisma Migrate", level: "shipped" },
+      { name: "MinIO (S3)", level: "built" },
+      { name: "Excel / data cleansing", level: "shipped" },
+    ],
+  },
+  {
+    group: { th: "Deploy และโครงสร้าง", en: "Deploy & infrastructure" },
+    items: [
+      { name: "Docker", level: "shipped" },
+      { name: "Railway", level: "shipped" },
+      { name: "Vercel", level: "shipped" },
+      { name: "GitHub Actions", level: "shipped" },
+      { name: "Linux server", level: "shipped" },
+      { name: "Nginx", level: "built" },
+      { name: "Terraform", level: "touched" },
+      { name: "AWS Cognito", level: "touched" },
+      { name: "Fastlane", level: "touched" },
+    ],
+  },
+  {
+    group: { th: "เชื่อมต่อระบบอื่น", en: "Integrations" },
+    items: [
+      { name: "LINE Messaging API", level: "shipped" },
+      { name: "Claude API", level: "shipped" },
+      { name: "Swagger / OpenAPI", level: "built" },
+      { name: "MQTT", level: "built" },
+    ],
+  },
+  {
+    group: { th: "เทสต์", en: "Testing" },
+    items: [
+      { name: "node:test", level: "shipped" },
+      { name: "Jest", level: "built" },
+      { name: "Vitest", level: "built" },
+      { name: "Playwright", level: "built" },
+    ],
+  },
+  {
+    group: { th: "ฮาร์ดแวร์", en: "Hardware" },
+    items: [
+      { name: "ESP32", level: "built" },
+      { name: "Arduino", level: "built" },
+      { name: "MicroPython", level: "built" },
+      { name: "Sensors & servos", level: "built" },
+    ],
+  },
+  {
+    group: { th: "เครื่องมือ", en: "Tooling" },
+    items: [
+      { name: "Git / GitHub", level: "shipped" },
+      { name: "Bitbucket", level: "shipped" },
+      { name: "Claude Code", level: "shipped" },
+      { name: "DBeaver", level: "built" },
+      { name: "Postman", level: "built" },
+      { name: "Obsidian", level: "built" },
+      { name: "Figma", level: "touched" },
+      { name: "Photoshop / Premiere", level: "touched" },
+    ],
+  },
+];
+
+/* ------------------------------------------------------------------ */
 /* CV                                                                  */
 /* ------------------------------------------------------------------ */
 
