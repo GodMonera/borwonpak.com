@@ -409,35 +409,40 @@ export function getProject(slug: string) {
 /* Now page                                                            */
 /* ------------------------------------------------------------------ */
 
-export const nowUpdated = "2026-10-18";
+/**
+ * Shown on /now and fed to the AI chat. A "now" page whose date has gone
+ * stale says the opposite of what the page is for, so this belongs next to
+ * nowItems above — change one, change the other.
+ */
+export const nowUpdated = "2026-10-19";
 
 export const nowItems: { heading: I18nText; body: I18nText }[] = [
   {
     heading: { th: "งานประจำ", en: "Day job" },
     body: {
-      th: "ทำงานเป็น software engineer ที่ VBreathe — แอปมือถือที่คุยกับอุปกรณ์จริง มี backend บน AWS กำลังเรียนรู้ฝั่ง infrastructure และ release process ของแอปมือถืออย่างจริงจัง",
-      en: "Working as a software engineer at VBreathe — a mobile app that talks to real hardware, with an AWS backend. I'm getting properly deep into infrastructure and the mobile release process.",
+      th: "เป็น software engineer ที่ VBreathe ทำแอปมือถือที่คุยกับเครื่องจริง บั๊กบางตัวเลยไม่ได้อยู่ในโค้ด แต่อยู่ที่อุปกรณ์อีกฝั่ง ตอนนี้กำลังลงลึกฝั่ง infrastructure บน AWS กับการปล่อยแอปขึ้นสโตร์ ซึ่งคนละโลกกับ deploy เว็บที่ push แล้วจบ",
+      en: "Software engineer at VBreathe, on a mobile app that talks to real hardware — so some of the bugs are not in the code at all, they are in the device at the other end. Getting properly into the AWS side, and into shipping to app stores, which is nothing like deploying a website where you push and it is done.",
     },
   },
   {
     heading: { th: "โปรเจกต์ข้างเคียง", en: "Side project" },
     body: {
-      th: "ดูแล IQ Tutor ต่อเนื่อง ตอนนี้กำลังขยายคู่มือผู้ใช้และเพิ่มชุดเทสต์ที่คุมกฎเรื่องเงินให้แน่นขึ้น",
-      en: "Still running IQ Tutor. Right now I'm expanding the user handbook and tightening the test suite that guards the money rules.",
+      th: "ยังดูแล IQ Tutor อยู่ ช่วงนี้ไม่ได้เพิ่มฟีเจอร์ใหม่เลย เขียนคู่มือกับเพิ่มเทสต์รอบกฎเรื่องเงินแทน เพราะระบบที่คิดเงินให้คนอื่นผิดไม่ได้ และตอนนี้ผมยังเป็นคนเดียวที่รู้ว่ามันทำงานยังไง",
+      en: "Still running IQ Tutor. No new features for a while — I am writing the handbook and adding tests around the money rules instead, because a system that pays people cannot be wrong, and right now I am the only person who knows how it works.",
     },
   },
   {
     heading: { th: "กำลังเรียนรู้", en: "Learning" },
     body: {
-      th: "AWS (Terraform, Lambda) และการออกแบบระบบที่ส่งมอบให้คนอื่นดูแลต่อได้ — เขียน runbook ให้คนอื่นอ่านรู้เรื่องยากกว่าที่คิด",
-      en: "AWS (Terraform, Lambda) and designing systems someone else can take over. Writing a runbook another person can actually follow is harder than it sounds.",
+      th: "Terraform กับ Lambda และเรื่องที่ยากกว่าสองอย่างนั้นรวมกัน — ออกแบบระบบให้คนอื่นรับช่วงต่อได้ เขียน runbook เสร็จแล้วเอาไปให้คนที่ไม่เคยเห็นระบบลองอ่าน จะรู้ทันทีว่าตัวเองข้ามอะไรไป",
+      en: "Terraform and Lambda — and the thing that is harder than both put together, which is designing a system someone else can take over. Hand your runbook to a person who has never seen it and you find out immediately what you left out.",
     },
   },
   {
     heading: { th: "นอกจอ", en: "Off-screen" },
     body: {
-      th: "ซ้อม fingerstyle guitar, เป่าขลุ่ย, calisthenics พื้นฐาน และเล่น MOBA กับ FPS กับเพื่อน",
-      en: "Practising fingerstyle guitar, playing the flute, basic calisthenics, and MOBA/FPS with friends.",
+      th: "ซ้อมกีตาร์ fingerstyle เป่าขลุ่ยตอนนิ้วล้า calisthenics พื้นฐาน แล้วก็ MOBA กับ FPS กับเพื่อน",
+      en: "Fingerstyle guitar, the flute when my fingers have had enough, basic calisthenics, and MOBA or FPS with friends.",
     },
   },
 ];
@@ -452,11 +457,17 @@ export const uses: { group: I18nText; items: { name: string; note: I18nText }[] 
     items: [
       {
         name: "MacBook (Apple Silicon)",
-        note: { th: "เครื่องหลัก ใช้ทุกวัน", en: "Daily driver" },
+        note: {
+          th: "เครื่องเดียว ใช้ทั้งทำงานและอัดกีตาร์",
+          en: "One machine, for the work and for recording guitar",
+        },
       },
       {
         name: "Rectangle",
-        note: { th: "จัดหน้าต่างด้วยคีย์ลัด", en: "Keyboard window management" },
+        note: {
+          th: "ย้ายหน้าต่างโดยไม่ต้องละมือจากคีย์บอร์ด",
+          en: "Moves windows without my hands leaving the keyboard",
+        },
       },
     ],
   },
@@ -465,22 +476,31 @@ export const uses: { group: I18nText; items: { name: string; note: I18nText }[] 
     items: [
       {
         name: "VS Code",
-        note: { th: "เอดิเตอร์หลัก", en: "Main editor" },
+        note: {
+          th: "ย้ายไปตัวอื่นมาหลายรอบแล้ว กลับมาทุกที",
+          en: "I have tried switching away more than once and always come back",
+        },
       },
       {
         name: "Claude Code",
         note: {
-          th: "ใช้คู่กันทุกวัน โดยเฉพาะตอนไล่บั๊กและเขียนเอกสาร",
-          en: "Alongside it every day, especially for debugging and writing docs",
+          th: "ใช้คู่กันทุกวัน เก่งที่สุดตอนไล่บั๊กกับเขียนเอกสาร ซึ่งเป็นสองอย่างที่ผมชอบน้อยที่สุด",
+          en: "Every day. Best at debugging and writing documentation — the two parts I like least",
         },
       },
       {
         name: "Docker Desktop",
-        note: { th: "Postgres และ service ตอน dev", en: "Postgres and services in dev" },
+        note: {
+          th: "Postgres แยกคอนเทนเนอร์ต่อโปรเจกต์ จะได้ไม่เผลอลบผิดตัว",
+          en: "A Postgres per project in its own container, so I cannot drop the wrong one",
+        },
       },
       {
         name: "DBeaver / Postman",
-        note: { th: "ส่องฐานข้อมูลและยิง API", en: "Poking at databases and APIs" },
+        note: {
+          th: "เอาไว้ส่องฐานข้อมูลกับยิง API ตอนที่ยังไม่เชื่อว่าโค้ดทำถูก",
+          en: "For looking at the database and poking the API when I do not yet trust the code",
+        },
       },
     ],
   },
@@ -489,15 +509,24 @@ export const uses: { group: I18nText; items: { name: string; note: I18nText }[] 
     items: [
       {
         name: "Railway",
-        note: { th: "Backend + Postgres ของ IQ Tutor", en: "IQ Tutor's backend + Postgres" },
+        note: {
+          th: "Backend กับ Postgres ของ IQ Tutor อยู่ที่นี่ รวมถึง backup",
+          en: "IQ Tutor's backend and Postgres live here, backups included",
+        },
       },
       {
         name: "Vercel",
-        note: { th: "Frontend ทุกตัว รวมถึงเว็บนี้", en: "Every frontend, including this site" },
+        note: {
+          th: "Frontend ทุกตัว รวมเว็บนี้ด้วย push แล้วขึ้นเอง",
+          en: "Every frontend, this site included. Push and it is live",
+        },
       },
       {
         name: "GitHub Actions",
-        note: { th: "รันเทสต์ก่อน deploy", en: "Tests before deploy" },
+        note: {
+          th: "รันเทสต์ก่อน deploy กันไม่ให้ของพังหลุดขึ้น production",
+          en: "Tests before deploy, so a broken build does not reach production",
+        },
       },
     ],
   },
@@ -507,8 +536,8 @@ export const uses: { group: I18nText; items: { name: string; note: I18nText }[] 
       {
         name: "Obsidian",
         note: {
-          th: "บันทึกงานรายวัน ซึ่งกลายมาเป็นบทความในเว็บนี้",
-          en: "Daily build logs, which become the posts on this site",
+          th: "จดบันทึกงานรายวัน บทความในเว็บนี้เกือบทุกอันเริ่มจากโน้ตพวกนั้น",
+          en: "Daily build logs. Nearly every post on this site started as one of those notes",
         },
       },
     ],
@@ -518,11 +547,17 @@ export const uses: { group: I18nText; items: { name: string; note: I18nText }[] 
     items: [
       {
         name: "ESP32 / Arduino",
-        note: { th: "เซนเซอร์และมอเตอร์", en: "Sensors and motors" },
+        note: {
+          th: "เซนเซอร์กับมอเตอร์ ไว้เตือนตัวเองว่าของจริงมันพังได้",
+          en: "Sensors and motors — a standing reminder that physical things break",
+        },
       },
       {
         name: "Acoustic guitar",
-        note: { th: "Fingerstyle", en: "Fingerstyle" },
+        note: {
+          th: "เครื่องมือที่ใช้บ่อยที่สุดในบรรดาของที่ไม่ต้องเสียบไฟ",
+          en: "The tool I reach for most among the ones that need no electricity",
+        },
       },
     ],
   },
@@ -826,8 +861,8 @@ export const techStack: {
 
 export const cv = {
   summary: {
-    th: "วิศวกรคอมพิวเตอร์ที่ถนัดงาน full-stack และชอบงานที่ต้องแปลงกฎทางธุรกิจที่คลุมเครือให้กลายเป็นระบบที่ตรวจสอบได้ มีประสบการณ์ดูแลระบบที่ใช้งานจริงด้วยตัวเองตั้งแต่ออกแบบจนถึง deploy",
-    en: "A computer engineer who works across the stack and enjoys turning fuzzy business rules into systems a computer can verify. I have taken production systems from design through deployment and kept them running on my own.",
+    th: "วิศวกรคอมพิวเตอร์จากเชียงใหม่ ทำได้ทั้งหน้าบ้านและหลังบ้าน ถนัดที่สุดกับงานที่กฎยังไม่มีใครเขียนไว้ — ต้องนั่งถามทีละเคสว่าจริง ๆ แล้วมันทำงานยังไง แล้วแปลงออกมาเป็นโค้ดที่ตรวจสอบได้ เคยพาระบบจากกระดาษเปล่าไปจนถึง production แล้วดูแลต่อเองคนเดียว",
+    en: "A computer engineer in Chiang Mai who works across the stack. I am at my best where the rules have not been written down yet — where the job is sitting with people case by case to find out how a thing actually works, then turning that into code a computer can check. I have taken systems from a blank page to production and kept them running on my own.",
   } as I18nText,
   experience: [
     {
