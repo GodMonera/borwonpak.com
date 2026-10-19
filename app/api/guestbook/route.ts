@@ -15,12 +15,31 @@ function clientIp(req: Request) {
   return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
 }
 
+/**
+ * Checking and recording are separate on purpose.
+ *
+ * Counting every request that arrives means a visitor who submits the form
+ * with an empty field twice has burned two thirds of their quota before
+ * posting anything, and is locked out for ten minutes over two typos. Only
+ * a message that actually reached the database should cost them a slot.
+ */
 function rateLimited(ip: string) {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
+  hits.set(ip, recent);
+  if (hits.size > 500) {
+    for (const [key, times] of hits) {
+      if (times.every((t) => now - t >= WINDOW_MS)) hits.delete(key);
+    }
+  }
+  return recent.length >= MAX_PER_WINDOW;
+}
+
+function recordPost(ip: string) {
   const now = Date.now();
   const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
   recent.push(now);
   hits.set(ip, recent);
-  return recent.length > MAX_PER_WINDOW;
 }
 
 /** Strip control characters (newlines kept) and collapse runaway blank lines. */
@@ -52,7 +71,8 @@ export async function POST(req: Request) {
   if (!isDbConfigured()) {
     return NextResponse.json({ error: "not_configured" }, { status: 503 });
   }
-  if (rateLimited(clientIp(req))) {
+  const ip = clientIp(req);
+  if (rateLimited(ip)) {
     return NextResponse.json({ error: "rate_limited" }, { status: 429 });
   }
 
@@ -74,7 +94,10 @@ export async function POST(req: Request) {
   };
 
   // Honeypot: a real person never fills in a field that is hidden from them.
+  // Answered as if it worked, and charged for the attempt — unlike a typo,
+  // this one really is something worth slowing down.
   if (typeof website === "string" && website.length > 0) {
+    recordPost(ip);
     return NextResponse.json({ ok: true, entry: null });
   }
 
@@ -91,6 +114,7 @@ export async function POST(req: Request) {
 
   try {
     const entry = await addEntry(name, message);
+    recordPost(ip);
     return NextResponse.json({ ok: true, entry });
   } catch (err) {
     console.error("[guestbook] insert failed", err);
