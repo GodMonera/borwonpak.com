@@ -53,15 +53,15 @@ export default async function LabPage({
           title={th ? "สมุดแท็บกีตาร์คลาสสิก" : "Classical tab book"}
           blurb={
             th
-              ? `${pieces.length} เพลงที่ทุกคนเคยได้ยิน ทุกเพลงหมดลิขสิทธิ์แล้ว เก็บไว้เป็น “โน้ต” ไม่ใช่เลขเฟร็ต แล้วให้โปรแกรมหาตำแหน่งที่มือขยับน้อยที่สุดให้ กดเล่นฟังได้ ปรับความเร็วได้ คัดลอกเป็นข้อความไปใช้ต่อได้`
-              : `${pieces.length} pieces everyone has heard, all of them out of copyright. Each is stored as notes rather than fret numbers, and the frets are worked out to keep the hand still. Play it, slow it down, or copy it out as plain text.`
+              ? `${pieces.length} เพลงที่ทุกคนเคยได้ยิน ทุกเพลงหมดลิขสิทธิ์แล้ว เก็บไว้เป็น “โน้ต” ไม่ใช่เลขเฟร็ต แล้วให้โปรแกรมหาตำแหน่งที่มือขยับน้อยที่สุดให้ — รวมถึงตอนที่ทำนองกับเบสดังพร้อมกัน กดเล่นฟังได้ ปรับความเร็วได้ คัดลอกเป็นข้อความไปใช้ต่อได้`
+              : `${pieces.length} pieces everyone has heard, all of them out of copyright. Each is stored as notes rather than fret numbers, and the frets are worked out to keep the hand still — including where a melody and a bass sound together. Play it, slow it down, or copy it out as plain text.`
           }
         >
           <TabBook locale={locale} />
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted">
             {th
-              ? "ที่นี่เป็นทำนองหลักอย่างเดียว ไม่ใช่ฉบับเรียบเรียงเต็มสำหรับกีตาร์คลาสสิก — ฉบับเต็มของเพลงอย่าง Recuerdos de la Alhambra เป็นงานเรียบเรียงของคนอื่นที่ยังมีลิขสิทธิ์ และยาวเกินกว่าจะใส่ในบรรทัดเดียวได้ ทุกเพลงมีลิงก์ไปโน้ตต้นฉบับฟรีกำกับไว้"
-              : "These are melody lines, not concert arrangements. A full transcription of something like Recuerdos de la Alhambra is somebody's copyrighted editorial work, and more than a single stave can hold anyway — so every piece links out to a free authoritative score."}
+              ? "แต่ละเพลงเขียนกำกับไว้ว่าได้มาเท่าไร — บางเพลงครบทั้งท่อน บางเพลงเป็นท่อนเปิดของงานที่ยาวกว่านั้นมาก ที่ไม่มีคือฉบับเรียบเรียงเต็มของเพลงอย่าง Recuerdos de la Alhambra เพราะเป็นงานเรียบเรียงของคนอื่นที่ยังมีลิขสิทธิ์อยู่ ทุกเพลงมีลิงก์ไปโน้ตต้นฉบับฟรีกำกับไว้ เอาไว้ตรวจได้"
+              : "Each entry says how much of the work it holds — some are complete, some are the opening of something far longer. What is not here is a full concert arrangement of something like Recuerdos de la Alhambra, which is somebody's copyrighted editorial work. Every piece links out to a free authoritative score, so none of this has to be taken on trust."}
           </p>
         </Experiment>
       </div>

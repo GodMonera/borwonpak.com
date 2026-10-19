@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { pieces } from "@/content/tabs";
 import type { Locale } from "@/lib/i18n";
-import { place, render, totalBeats, type Placed } from "@/lib/tab";
+import { columnWidth, place, render, totalBeats } from "@/lib/tab";
 import { play, silence } from "@/lib/sound";
 
 const STRING_LABELS = ["e", "B", "G", "D", "A", "E"];
@@ -23,14 +23,6 @@ export function TabBook({ locale }: { locale: Locale }) {
   );
   const tempo = Math.round(piece.tempo * tempoScale);
 
-  // Stop the clock on unmount or when the piece changes under a playback.
-  useEffect(() => {
-    return () => {
-      if (frame.current !== null) cancelAnimationFrame(frame.current);
-      silence();
-    };
-  }, [piece]);
-
   function stop() {
     if (frame.current !== null) cancelAnimationFrame(frame.current);
     frame.current = null;
@@ -38,17 +30,40 @@ export function TabBook({ locale }: { locale: Locale }) {
     silence();
   }
 
+  // Stop the clock on unmount, and when the piece changes under a playback.
+  useEffect(() => {
+    return () => {
+      if (frame.current !== null) cancelAnimationFrame(frame.current);
+      silence();
+    };
+  }, [piece]);
+
+  /*
+    Leaving the tab stops the piece.
+
+    The cursor is driven by requestAnimationFrame, which a hidden tab does not
+    run, but the notes are already scheduled inside the Web Audio context and
+    carry on regardless. Without this you come back to music playing under a
+    frozen cursor and a Stop button that will never clear itself.
+  */
+  useEffect(() => {
+    const onHide = () => {
+      if (document.hidden) stop();
+    };
+    document.addEventListener("visibilitychange", onHide);
+    return () => document.removeEventListener("visibilitychange", onHide);
+  });
+
   function start() {
     stop();
     const secondsPerBeat = 60 / tempo;
-    const notes = bars
-      .flat()
-      .filter((p): p is Placed & { midi: number } => p.midi !== null)
-      .map((p) => ({
-        midi: p.midi,
+    const notes = bars.flat().flatMap((p) =>
+      p.stops.map((stop) => ({
+        midi: stop.midi,
         at: p.at * secondsPerBeat,
         hold: Math.max(0.5, p.note.beats * secondsPerBeat * 2.5),
-      }));
+      })),
+    );
     if (notes.length === 0) return;
 
     play(notes);
@@ -122,7 +137,9 @@ export function TabBook({ locale }: { locale: Locale }) {
         </span>
       </div>
 
-      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+      <p className="hud mt-3 text-abalone">{piece.scope[locale]}</p>
+
+      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
         {piece.about[locale]}
       </p>
 
@@ -143,27 +160,25 @@ export function TabBook({ locale }: { locale: Locale }) {
                   playingAt !== null &&
                   playingAt >= placed.at &&
                   playingAt < placed.at + placed.note.beats;
+                const width = columnWidth(placed);
                 return (
                   <div
                     key={placed.at}
-                    style={{ width: `${Math.max(3, placed.note.beats * 4)}ch` }}
+                    style={{ width: `${width}ch` }}
                     className={active ? "bg-brass/25" : undefined}
                   >
-                    {STRING_LABELS.map((label, row) => (
-                      <div key={label} className="whitespace-pre">
-                        {placed.string === 5 - row && placed.fret !== null ? (
-                          <span className="text-brass">{placed.fret}</span>
-                        ) : null}
-                        <span className="text-line-bright">
-                          {"–".repeat(
-                            Math.max(3, Math.round(placed.note.beats * 4)) -
-                              (placed.string === 5 - row && placed.fret !== null
-                                ? String(placed.fret).length
-                                : 0),
-                          )}
-                        </span>
-                      </div>
-                    ))}
+                    {STRING_LABELS.map((label, row) => {
+                      const stop = placed.stops.find((s) => s.string === 5 - row);
+                      const mark = stop ? String(stop.fret) : "";
+                      return (
+                        <div key={label} className="whitespace-pre">
+                          <span className="text-brass">{mark}</span>
+                          <span className="text-line-bright">
+                            {"–".repeat(width - mark.length)}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
                 );
               })}

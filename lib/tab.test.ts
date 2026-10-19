@@ -7,11 +7,9 @@ import { TUNING } from "./chords.ts";
 test("every pitch parses", () => {
   for (const piece of pieces) {
     for (const note of piece.bars.flat()) {
-      if (note.pitch === null) continue;
-      assert.ok(
-        Number.isFinite(toMidi(note.pitch)),
-        `${piece.slug}: ${note.pitch}`,
-      );
+      for (const pitch of note.pitches) {
+        assert.ok(Number.isFinite(toMidi(pitch)), `${piece.slug}: ${pitch}`);
+      }
     }
   }
 });
@@ -23,17 +21,54 @@ test("every pitch parses", () => {
 */
 test("every note is reachable on a guitar in standard tuning", () => {
   for (const piece of pieces) {
-    for (const bar of place(piece.bars)) {
+    const shift = piece.transpose ?? 0;
+    for (const bar of place(piece.bars, shift)) {
       for (const placed of bar) {
-        if (placed.note.pitch === null) continue;
-        assert.ok(
-          placed.string !== null && placed.fret !== null,
-          `${piece.slug}: ${placed.note.pitch} cannot be played`,
-        );
         assert.equal(
-          TUNING[placed.string] + placed.fret,
-          placed.midi,
-          `${piece.slug}: ${placed.note.pitch} placed on the wrong note`,
+          placed.stops.length,
+          placed.note.pitches.length,
+          `${piece.slug}: ${placed.note.pitches.join("+")} cannot be played`,
+        );
+        const wanted = placed.note.pitches
+          .map((p) => toMidi(p) + shift)
+          .sort((a, b) => a - b);
+        placed.stops.forEach((stop, i) => {
+          assert.equal(
+            TUNING[stop.string] + stop.fret,
+            wanted[i],
+            `${piece.slug}: ${placed.note.pitches.join("+")} placed wrong`,
+          );
+        });
+      }
+    }
+  }
+});
+
+test("notes struck together each get their own string", () => {
+  for (const piece of pieces) {
+    for (const bar of place(piece.bars, piece.transpose ?? 0)) {
+      for (const placed of bar) {
+        const strings = new Set(placed.stops.map((s) => s.string));
+        assert.equal(
+          strings.size,
+          placed.stops.length,
+          `${piece.slug}: two notes share a string at beat ${placed.at}`,
+        );
+      }
+    }
+  }
+});
+
+test("a hand can hold every chord the placer chooses", () => {
+  for (const piece of pieces) {
+    for (const bar of place(piece.bars, piece.transpose ?? 0)) {
+      for (const placed of bar) {
+        const frets = placed.stops.map((s) => s.fret).filter((f) => f > 0);
+        if (frets.length < 2) continue;
+        const span = Math.max(...frets) - Math.min(...frets);
+        assert.ok(
+          span <= 4,
+          `${piece.slug}: a ${span}-fret stretch at beat ${placed.at}`,
         );
       }
     }
@@ -56,9 +91,17 @@ test("bars hold the number of beats their meter promises", () => {
   }
 });
 
+test("each piece says what it contains", () => {
+  for (const piece of pieces) {
+    for (const locale of ["th", "en"] as const) {
+      assert.ok(piece.scope[locale].length > 0, `${piece.slug} ${locale}`);
+    }
+  }
+});
+
 test("the rendered grid has six aligned lines", () => {
   for (const piece of pieces) {
-    const lines = render(place(piece.bars));
+    const lines = render(place(piece.bars, piece.transpose ?? 0));
     assert.equal(lines.length, 6, piece.slug);
     const width = lines[0].length;
     for (const line of lines) assert.equal(line.length, width, piece.slug);
