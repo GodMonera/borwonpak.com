@@ -59,7 +59,7 @@ export function Hero({
           {tagline}
         </Reveal>
 
-        <Reveal as="p" delay={200} className="mt-5 max-w-xl leading-relaxed text-muted">
+        <Reveal as="p" delay={200} className="mt-5 max-w-xl text-pretty leading-relaxed text-muted">
           {intro}
         </Reveal>
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { gaming, nowItems, projects, tracks } from "@/content/site";
+import { gaming, learning, nowItems, projects, tracks } from "@/content/site";
 import { isLocale, t, type Locale } from "@/lib/i18n";
 import { listPosts } from "@/lib/posts";
 import { ArrowLink } from "@/components/ui";
@@ -30,16 +30,29 @@ function navChords(locale: Locale, copy: ReturnType<typeof t>): Chord[] {
   ];
 }
 
-/** Facts pulled from the actual work — these float around the HUD wordmark. */
+/**
+ * Numbers that float around the HUD wordmark.
+ *
+ * Each one has to be a fact about him, not a metric that sounds impressive.
+ * "95+ README sections" and "11 bugs found in an audit" were here and are
+ * gone: counting the headings in your own documentation is padding, and
+ * nobody reads either number and pictures a person.
+ */
 function navChips(locale: Locale, projectCount: number): Chip[] {
   const th = locale === "th";
   return [
     { value: "1st", label: th ? "เกียรตินิยม มช." : "class honours, CMU" },
     { value: `${projectCount}`, label: th ? "โปรเจกต์" : "projects shipped" },
-    { value: "95+", label: th ? "หัวข้อใน README" : "README sections" },
-    { value: "11", label: th ? "บั๊กที่ audit เจอ" : "bugs found in audit" },
     { value: "10K", label: th ? "แถว Excel ที่ล้าง" : "rows cleansed" },
     { value: "3", label: th ? "แอปบน LINE" : "apps on LINE" },
+    {
+      value: `${learning.length}`,
+      label: th ? "เพลงที่กำลังหัด" : "pieces I'm learning",
+    },
+    {
+      value: "1",
+      label: th ? "คนที่ดูแล IQ Tutor" : "person running IQ Tutor",
+    },
   ];
 }
 

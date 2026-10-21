@@ -145,7 +145,7 @@ const th: Dict = {
     kicker: "ปาล์ม · เชียงใหม่",
     tagline: "ผมสร้างระบบที่มีคนใช้จริงทุกวัน",
     intro:
-      "ผมชื่อปาล์มครับ อยู่เชียงใหม่ เรียนจบวิศวกรรมคอมพิวเตอร์ที่ มช. สิ่งที่ผมชอบที่สุดคือตอนที่กฎมันยุ่ง — ใครได้ค่าสอนเท่าไร คาบไหนนับว่าเรียนไปแล้ว ลาได้ถึงเมื่อไร เรื่องพวกนี้ไม่มีใครเขียนไว้ที่ไหน ต้องนั่งถามทีละเคสแล้วแปลงให้เป็นโค้ดที่ตรวจสอบได้",
+      "ผมชื่อปาล์มครับ อยู่เชียงใหม่ เป็นคนกระตือรือร้นกับแทบทุกเรื่องที่เข้ามา และพร้อมเรียนรู้สิ่งใหม่อยู่เสมอ ไม่ว่าจะเป็นงาน โค้ด หรือเพลงที่เพิ่งเริ่มหัดเมื่อวาน",
     ctaWork: "ดูผลงาน",
     ctaAsk: "มีอะไรอยากรู้ ถาม AI ได้",
     featured: "งานที่ผมภูมิใจ",
@@ -274,7 +274,7 @@ const en: Dict = {
     kicker: "Palm · Chiang Mai",
     tagline: "I build systems people use every day",
     intro:
-      "I'm Palm. I studied computer engineering in Chiang Mai and never left. The part I like most is the messy part — who gets paid what, which class counts as taught, how late you can still cancel. None of that is written down anywhere. You sit with someone, go through it case by case, and turn it into rules a computer can check.",
+      "I'm Palm, from Chiang Mai. I throw myself at just about anything that comes my way, and I'm always ready to learn something new — work, code, or a piece I only started learning yesterday.",
     ctaWork: "See my work",
     ctaAsk: "Curious? Ask the AI",
     featured: "Work I'm proud of",
