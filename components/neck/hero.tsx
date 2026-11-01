@@ -2,6 +2,7 @@ import { site } from "@/content/site";
 import type { Locale } from "@/lib/i18n";
 import { Reveal } from "@/components/hud/reveal";
 import { ChordNav, type Chord } from "@/components/neck/chord-nav";
+import { Portrait } from "@/components/portrait";
 
 export function Hero({
   locale,
@@ -31,7 +32,14 @@ export function Hero({
           {kicker}
         </Reveal>
 
-        <h1 className="mt-6 w-full">
+        {/* Negative margin pulls the wordmark up into the portrait's faded
+            hem, so the two read as one object rather than a photo with a
+            caption under it. */}
+        <Reveal className="mt-6 w-full">
+          <Portrait className="mx-auto w-[clamp(150px,34vw,230px)]" />
+        </Reveal>
+
+        <h1 className="-mt-6 w-full sm:-mt-8">
           <span className="sr-only">{site.name}</span>
           <span
             aria-hidden

@@ -3,6 +3,7 @@ import { site } from "@/content/site";
 import type { Locale } from "@/lib/i18n";
 import { Reveal } from "@/components/hud/reveal";
 import { Hand } from "@/components/palm/hand";
+import { Portrait } from "@/components/portrait";
 
 /**
  * One line of the hand, and where it goes. `line` matches the `data-line` on
@@ -37,27 +38,38 @@ export function Hero({
       <hr className="palm-rule" />
 
       <div className="py-16 sm:py-20">
-        <Reveal as="p" className="hud text-brass">
-          {kicker}
-        </Reveal>
+        {/* This skin sets its type flush left, so the portrait sits beside the
+            name rather than over it — bottom-aligned, the way a plate faces
+            the text block it belongs to on a printed page. */}
+        <div className="flex flex-wrap items-end gap-x-10 gap-y-6">
+          <div className="min-w-[16rem] flex-1">
+            <Reveal as="p" className="hud text-brass">
+              {kicker}
+            </Reveal>
 
-        <h1 className="mt-5">
-          <span className="sr-only">{site.name}</span>
-          <span
-            aria-hidden
-            className="palm-display block text-[15vw] font-bold leading-[0.9] sm:text-[clamp(3.5rem,10vw,7rem)]"
-          >
-            Borwonpak
-          </span>
-        </h1>
+            <h1 className="mt-4">
+              <span className="sr-only">{site.name}</span>
+              <span
+                aria-hidden
+                className="palm-display block text-[15vw] font-bold leading-[0.9] sm:text-[clamp(3.5rem,9vw,6rem)]"
+              >
+                Borwonpak
+              </span>
+            </h1>
 
-        <Reveal
-          as="p"
-          delay={120}
-          className="palm-display mt-6 max-w-2xl text-2xl leading-snug sm:text-3xl"
-        >
-          {tagline}
-        </Reveal>
+            <Reveal
+              as="p"
+              delay={120}
+              className="palm-display mt-5 max-w-2xl text-2xl leading-snug sm:text-3xl"
+            >
+              {tagline}
+            </Reveal>
+          </div>
+
+          <Reveal className="shrink-0">
+            <Portrait className="w-[clamp(140px,22vw,210px)]" />
+          </Reveal>
+        </div>
 
         <Reveal as="p" delay={200} className="mt-5 max-w-xl text-pretty leading-relaxed text-muted">
           {intro}

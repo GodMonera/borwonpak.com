@@ -2,6 +2,7 @@ import Link from "next/link";
 import { site } from "@/content/site";
 import type { Locale } from "@/lib/i18n";
 import { Reveal } from "@/components/hud/reveal";
+import { Portrait } from "@/components/portrait";
 
 export type Chip = { value: string; label: string };
 
@@ -131,7 +132,11 @@ export function Hero({
           {kicker}
         </Reveal>
 
-        <h1 className="mt-7 w-full">
+        <Reveal className="mt-7 w-full">
+          <Portrait className="mx-auto w-[clamp(150px,32vw,220px)]" />
+        </Reveal>
+
+        <h1 className="-mt-6 w-full sm:-mt-8">
           <span className="sr-only">{site.name}</span>
           <span
             aria-hidden

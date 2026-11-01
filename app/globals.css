@@ -428,6 +428,35 @@ body {
 }
 
 /* ------------------------------------------------------------------ */
+/* Hero portrait                                                       */
+/* ------------------------------------------------------------------ */
+
+/*
+  The photograph ends mid-shirt, so the bottom is faded out instead of left
+  as a cut edge. Masking rather than a baked-in gradient keeps the one file
+  working on all three skins, whose grounds are different colours.
+*/
+.portrait {
+  -webkit-mask-image: linear-gradient(to bottom, #000 44%, transparent 86%);
+  mask-image: linear-gradient(to bottom, #000 44%, transparent 86%);
+}
+
+/* Settle the portrait in with the palette rather than letting a phone
+   snapshot sit on the page at full saturation. */
+.portrait img {
+  filter: saturate(0.82) contrast(1.04);
+}
+
+:root[data-skin="hud"] .portrait img {
+  /* The readout skin is nearly monochrome; the photo follows it. */
+  filter: saturate(0.35) contrast(1.08) brightness(0.96);
+}
+
+:root[data-skin="palm"] .portrait img {
+  filter: sepia(0.18) saturate(0.9) contrast(1.02);
+}
+
+/* ------------------------------------------------------------------ */
 /* Scroll reveal                                                       */
 /* ------------------------------------------------------------------ */
 
