@@ -9,6 +9,21 @@ const TONE: Record<StackLevel, string> = {
   touched: "border-line text-muted/70",
 };
 
+const ORDER: Record<StackLevel, number> = { shipped: 0, built: 1, touched: 2 };
+
+/**
+ * Strongest claims first, so the chips read in the same order as the legend
+ * above them.
+ *
+ * Done here rather than by keeping content/site.ts hand-sorted: promoting one
+ * entry from built to shipped is a one-word edit, and it should not quietly
+ * strand that entry in the middle of the faded ones. Array.sort is stable, so
+ * the deliberate ordering within each level survives.
+ */
+function byLevel(items: readonly { name: string; level: StackLevel }[]) {
+  return [...items].sort((a, b) => ORDER[a.level] - ORDER[b.level]);
+}
+
 export function TechStack({
   locale,
   compact = false,
@@ -40,7 +55,7 @@ export function TechStack({
               {group.group[locale]}
             </h3>
             <ul className="mt-3 flex flex-wrap gap-1.5">
-              {group.items.map((item) => (
+              {byLevel(group.items).map((item) => (
                 <li
                   key={item.name}
                   className={`border px-2 py-1 ${TONE[item.level]} ${
