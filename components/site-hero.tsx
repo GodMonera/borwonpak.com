@@ -3,6 +3,7 @@ import type { Skin } from "@/lib/skins";
 import { Hero as NeckHero } from "@/components/neck/hero";
 import { Hero as HudHero, type Chip } from "@/components/hud/hero";
 import { Hero as PalmHero, type PalmLine } from "@/components/palm/hero";
+import { Hero as StoryHero } from "@/components/story/hero";
 import type { Chord } from "@/components/neck/chord-nav";
 
 /**
@@ -37,6 +38,19 @@ export function SiteHero({ skin, ...p }: HeroProps) {
         ctaWork={p.ctaWork}
         ctaAsk={p.ctaAsk}
         chips={p.chips}
+      />
+    );
+  }
+
+  if (skin === "story") {
+    return (
+      <StoryHero
+        locale={p.locale}
+        kicker={p.kicker}
+        tagline={p.tagline}
+        intro={p.intro}
+        ctaWork={p.ctaWork}
+        ctaAsk={p.ctaAsk}
       />
     );
   }

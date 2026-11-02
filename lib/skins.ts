@@ -3,7 +3,7 @@
  * type treatment. The page *structure* is shared, so adding one means a token
  * block in globals.css plus a hero component — not a second copy of the site.
  */
-export const skins = ["neck", "hud", "palm"] as const;
+export const skins = ["neck", "hud", "palm", "story"] as const;
 export type Skin = (typeof skins)[number];
 export const defaultSkin: Skin = "neck";
 
@@ -41,6 +41,14 @@ export const skinMeta: Record<
       en: "Near-black, hairline grid, everything numbered. Reads like a readout.",
     },
     swatch: ["#08090b", "#f2f0ea", "#f2a007"],
+  },
+  story: {
+    name: { th: "เล่าเป็นบท", en: "Told in chapters" },
+    note: {
+      th: "อ่านไล่ลงเป็นบท รูปค่อย ๆ ถอยห่างกลายเป็นพื้นหลังเมื่อเลื่อนลง",
+      en: "Read as chapters. The portrait steps back into the page as you scroll.",
+    },
+    swatch: ["#10111c", "#e8e6f0", "#f0a07a"],
   },
   palm: {
     name: { th: "ดูลายมือ", en: "Palm reading" },

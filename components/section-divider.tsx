@@ -3,6 +3,7 @@ import type { Skin } from "@/lib/skins";
 import { Fret } from "@/components/neck/fret";
 import { Band } from "@/components/hud/band";
 import { Leaf } from "@/components/palm/leaf";
+import { Chapter } from "@/components/story/chapter";
 
 /**
  * One homepage section, titled in whichever visual language is live.
@@ -18,6 +19,7 @@ export function SectionDivider({
   title,
   meta,
   id,
+  chapterLabel,
   children,
 }: {
   skin: Skin;
@@ -26,8 +28,18 @@ export function SectionDivider({
   title: string;
   meta?: string;
   id?: string;
+  /** The word for "chapter", for the skin that numbers its sections that way. */
+  chapterLabel: string;
   children: ReactNode;
 }) {
+  if (skin === "story") {
+    return (
+      <Chapter index={index} label={chapterLabel} title={title} meta={meta} id={id}>
+        {children}
+      </Chapter>
+    );
+  }
+
   if (skin === "hud") {
     return (
       <Band index={index} title={title} meta={meta} id={id}>

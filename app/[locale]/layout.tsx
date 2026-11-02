@@ -42,6 +42,7 @@ const CHROME: Record<Skin, { light: string; dark: string }> = {
   neck: { light: "#efe8da", dark: "#191310" },
   hud: { light: "#f4f3ef", dark: "#08090b" },
   palm: { light: "#f2ece0", dark: "#16130f" },
+  story: { light: "#f2f0f7", dark: "#10111c" },
 };
 
 export async function generateViewport(): Promise<Viewport> {

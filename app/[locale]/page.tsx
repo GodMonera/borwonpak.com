@@ -115,6 +115,7 @@ export default async function HomePage({
 
       <SectionDivider
         skin={skin}
+        chapterLabel={th ? "บทที่" : "Chapter"}
         position={3}
         index="01"
         title={copy.home.featured}
@@ -140,6 +141,7 @@ export default async function HomePage({
       {posts.length > 0 && (
         <SectionDivider
           skin={skin}
+          chapterLabel={th ? "บทที่" : "Chapter"}
           position={5}
           index="02"
           title={copy.home.latestPosts}
@@ -165,6 +167,7 @@ export default async function HomePage({
 
       <SectionDivider
         skin={skin}
+        chapterLabel={th ? "บทที่" : "Chapter"}
         position={7}
         index="03"
         title={copy.home.nowTitle}
@@ -191,6 +194,7 @@ export default async function HomePage({
 
       <SectionDivider
         skin={skin}
+        chapterLabel={th ? "บทที่" : "Chapter"}
         position={9}
         index="04"
         title={th ? "เคยเขียนอะไรมาบ้าง" : "What I've worked with"}
@@ -206,6 +210,7 @@ export default async function HomePage({
 
       <SectionDivider
         skin={skin}
+        chapterLabel={th ? "บทที่" : "Chapter"}
         position={12}
         index="05"
         title={copy.home.beyondCode}

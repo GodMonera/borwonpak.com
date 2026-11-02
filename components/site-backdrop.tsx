@@ -1,5 +1,6 @@
 import type { Skin } from "@/lib/skins";
 import { Strings } from "@/components/neck/strings";
+import { StoryBackdrop } from "@/components/story/backdrop";
 
 /**
  * Whatever sits behind the content: strings on the neck, a dot matrix on the
@@ -8,6 +9,7 @@ import { Strings } from "@/components/neck/strings";
  */
 export function SiteBackdrop({ skin }: { skin: Skin }) {
   if (skin === "neck") return <Strings />;
+  if (skin === "story") return <StoryBackdrop />;
 
   return (
     <div
