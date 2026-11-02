@@ -45,8 +45,8 @@ export const skinMeta: Record<
   story: {
     name: { th: "เล่าเป็นบท", en: "Told in chapters" },
     note: {
-      th: "อ่านไล่ลงเป็นบท รูปค่อย ๆ ถอยห่างกลายเป็นพื้นหลังเมื่อเลื่อนลง",
-      en: "Read as chapters. The portrait steps back into the page as you scroll.",
+      th: "อ่านไล่ลงเป็นบท มีตัวการ์ตูนผมเล่นกีตาร์อยู่กลางป่าเป็นพื้นหลัง",
+      en: "Read as chapters, over a cartoon of him going at a guitar in a forest.",
     },
     swatch: ["#10111c", "#e8e6f0", "#f0a07a"],
   },

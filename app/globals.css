@@ -502,128 +502,473 @@ body {
 /* Story primitives                                                    */
 /* ------------------------------------------------------------------ */
 
-/*
-  Three portraits, fixed behind the page, handing over to each other as you
-  read. Chapter one is the one looking at you; by the last chapter he is out
-  somewhere at night with a bag of snacks, which is the point the page is
-  making in words anyway.
+/* ---- the forest ------------------------------------------------- */
 
-  Driven by a scroll-progress timeline, so there is no scroll listener and
-  nothing runs on the main thread — the browser ties each layer straight to
-  the scroller. Where that is unsupported the keyframes never apply, the
-  rules below leave the first portrait sitting quietly and hide the other
-  two, and the page is still a page.
+/*
+  Scene colours are tokens, not literals in the SVG, because the reader can
+  still flip this skin between light and dark. Dark is night in the woods;
+  light is the same clearing at midday. Without this the trunks stayed black
+  under a light theme and the dark body text landed on them unreadable.
 */
-.story-face {
+:root[data-skin="story"] {
+  --forest-sky-1: #2b2f4a;
+  --forest-sky-2: #1b1e30;
+  --forest-sky-3: #10111c;
+  --forest-far: #1a1d2e;
+  --forest-mid: #141829;
+  --forest-near: #0b0d18;
+  --forest-floor: #080a12;
+  --forest-glow: #ffd9a0;
+}
+
+@media (prefers-color-scheme: light) {
+  :root[data-skin="story"]:not([data-theme]) {
+    --forest-sky-1: #cfe3d4;
+    --forest-sky-2: #e6eee4;
+    --forest-sky-3: #f2f0f7;
+    --forest-far: #b7cdbb;
+    --forest-mid: #9cb8a3;
+    --forest-near: #6d8c78;
+    --forest-floor: #c8d8c6;
+    --forest-glow: #ffbf5e;
+  }
+}
+
+:root[data-skin="story"][data-theme="light"] {
+  --forest-sky-1: #cfe3d4;
+  --forest-sky-2: #e6eee4;
+  --forest-sky-3: #f2f0f7;
+  --forest-far: #b7cdbb;
+  --forest-mid: #9cb8a3;
+  --forest-near: #6d8c78;
+  --forest-floor: #c8d8c6;
+  --forest-glow: #ffbf5e;
+}
+
+/*
+  A drawn scene behind the page instead of a photograph. Four depth bands,
+  each sliding at its own rate against scroll progress, which is what sells
+  depth — a single moving layer just looks like a moving layer.
+
+  All of it is decoration; the chapters read with none of it.
+*/
+.story-forest {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  overflow: hidden;
+}
+
+.story-sky {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 70% at 50% 0%,
+    var(--forest-sky-1) 0%,
+    var(--forest-sky-2) 45%,
+    var(--forest-sky-3) 100%
+  );
+}
+
+.story-layer {
+  position: absolute;
+  inset: -12% 0 -12% 0;
+}
+.story-layer svg {
+  width: 100%;
+  height: 100%;
+}
+.story-layer-far {
+  opacity: 0.55;
+}
+.story-layer-mid {
+  opacity: 0.8;
+}
+.story-layer-near {
+  opacity: 0.95;
+}
+
+.story-shaft {
+  position: absolute;
+  top: -20%;
+  width: 26vw;
+  height: 150%;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, #f0a07a 13%, transparent),
+    transparent 70%
+  );
+  filter: blur(14px);
+  transform: rotate(9deg);
+}
+.story-shaft-a {
+  left: 14%;
+}
+.story-shaft-b {
+  left: 62%;
+  width: 18vw;
+  opacity: 0.6;
+}
+
+.story-ground {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 22vh;
+  background: linear-gradient(to top, var(--forest-floor) 40%, transparent);
+}
+
+.story-fireflies span {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--forest-glow);
+  box-shadow: 0 0 8px 2px color-mix(in srgb, var(--forest-glow) 55%, transparent);
+  animation: firefly var(--fly-dur, 7s) ease-in-out infinite;
+  animation-delay: var(--fly-delay, 0s);
+}
+
+@keyframes firefly {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate(14px, -22px);
+    opacity: 0.9;
+  }
 }
 
 /*
-  Pushed to the right so the text column stays clear of him. Centred, the
-  figure sits directly under the lead paragraph and both lose.
+  Stood to the right so the text column stays clear of him. Centred he lands
+  squarely on the lead paragraph and the buttons, and both lose.
 */
-.story-face > * {
+.story-mascot {
   position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 3vw;
+  right: 4vw;
+  bottom: 8vh;
+  height: min(54vh, 430px);
+  aspect-ratio: 260 / 300;
 }
 
-.story-face img {
-  object-fit: contain;
-  object-position: center bottom;
-}
-
-/* Without a scroll timeline: the opening portrait, held still. */
-.story-face > :first-child {
-  opacity: 0.14;
-}
-.story-face > :first-child ~ * {
-  opacity: 0;
-}
-
-/* The opening one starts visible and leaves. */
-@keyframes story-open {
-  from {
-    opacity: 0.26;
-    transform: translate(0, 0) scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: translate(-13vw, -17vh) scale(1.26);
+@media (max-width: 1024px) {
+  .story-mascot {
+    right: 1vw;
+    height: min(42vh, 330px);
   }
 }
 
-/* The later ones arrive, hold, and leave. */
+/* On a phone there is no room beside the text, so he goes low and faint
+   rather than on top of it. */
 @media (max-width: 640px) {
-  :root[data-skin="story"] .story-face > * {
-    padding-right: 0;
-    justify-content: center;
-  }
-  :root[data-skin="story"] .story-face {
-    opacity: 0.6;
+  .story-mascot {
+    right: 50%;
+    transform: translateX(50%);
+    height: min(30vh, 230px);
+    bottom: 4vh;
+    opacity: 0.45;
   }
 }
 
-@keyframes story-pass {
-  0% {
-    opacity: 0;
-    transform: translate(13vw, 11vh) scale(0.93);
+/* ---- the rig ------------------------------------------------------ */
+
+/*
+  Everything below drives one <svg>. transform-box: fill-box is what makes
+  transform-origin mean "this shape" rather than "the whole canvas", and
+  without it every rotation swings from the corner of the viewport.
+*/
+.story-forest [class^="m-"],
+.story-forest [class*=" m-"] {
+  transform-box: fill-box;
+}
+
+@keyframes m-bounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
   }
-  22% {
-    opacity: 0.24;
+  25% {
+    transform: translateY(-9px) rotate(-1.6deg);
   }
+  50% {
+    transform: translateY(2px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-6px) rotate(1.6deg);
+  }
+}
+.m-bounce {
+  transform-origin: 50% 100%;
+  animation: m-bounce 0.62s ease-in-out infinite;
+}
+
+/* The head goes harder than the body — that is the whole joke. */
+@keyframes m-head {
+  0%,
+  100% {
+    transform: rotate(-7deg) translateY(0);
+  }
+  50% {
+    transform: rotate(8deg) translateY(-4px);
+  }
+}
+.m-head {
+  transform-origin: 50% 90%;
+  animation: m-head 0.62s ease-in-out infinite;
+}
+
+@keyframes m-cap {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  40% {
+    transform: translateY(-7px) rotate(-6deg);
+  }
+}
+.m-cap {
+  transform-origin: 50% 100%;
+  animation: m-cap 0.62s ease-in-out infinite;
+}
+
+@keyframes m-strum {
+  0%,
+  100% {
+    transform: rotate(14deg);
+  }
+  50% {
+    transform: rotate(-16deg);
+  }
+}
+.m-arm-strum {
+  transform-origin: 50% 8%;
+  animation: m-strum 0.155s ease-in-out infinite;
+}
+
+@keyframes m-neck-arm {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+.m-arm-neck {
+  transform-origin: 50% 8%;
+  animation: m-neck-arm 1.24s ease-in-out infinite;
+}
+
+@keyframes m-guitar {
+  0%,
+  100% {
+    transform: rotate(-1.4deg);
+  }
+  50% {
+    transform: rotate(1.8deg);
+  }
+}
+.m-guitar {
+  transform-origin: 70% 70%;
+  animation: m-guitar 0.62s ease-in-out infinite;
+}
+
+/*
+  Eyes alternate between wide and screwed shut rather than blinking. The two
+  groups are stacked in the markup and these two animations are exact
+  complements, so one is always showing.
+*/
+@keyframes m-eye-open {
+  0%,
+  44% {
+    opacity: 1;
+  }
+  46%,
   72% {
-    opacity: 0.21;
+    opacity: 0;
+  }
+  74%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes m-eye-shut {
+  0%,
+  44% {
+    opacity: 0;
+  }
+  46%,
+  72% {
+    opacity: 1;
+  }
+  74%,
+  100% {
+    opacity: 0;
+  }
+}
+.m-eye-open {
+  animation: m-eye-open 3.1s steps(1, end) infinite;
+}
+.m-eye-shut {
+  animation: m-eye-shut 3.1s steps(1, end) infinite;
+}
+
+@keyframes m-brow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-5px);
+  }
+}
+.m-brow {
+  animation: m-brow 3.1s ease-in-out infinite;
+}
+
+@keyframes m-mouth {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.18, 1.5);
+  }
+}
+.m-mouth {
+  transform-origin: 50% 30%;
+  animation: m-mouth 0.62s ease-in-out infinite;
+}
+
+@keyframes m-zip {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-7px);
+  }
+}
+.m-zip {
+  animation: m-zip 0.31s ease-in-out infinite;
+}
+
+@keyframes m-sweat {
+  0%,
+  60% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(4px, 0) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate(-11vw, -13vh) scale(1.17);
+    transform: translate(12px, 26px) scale(0.9);
+  }
+}
+.m-sweat {
+  transform-origin: 50% 50%;
+  animation: m-sweat 2.4s ease-in infinite;
+}
+
+@keyframes m-note {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg) scale(0.6);
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(34px, -58px) rotate(22deg) scale(1.15);
+  }
+}
+.m-note {
+  animation: m-note 1.9s ease-out infinite;
+}
+.m-note-2 {
+  animation-delay: 0.62s;
+}
+.m-note-3 {
+  animation-delay: 1.24s;
+}
+
+/* ---- parallax ----------------------------------------------------- */
+
+@keyframes story-drift-far {
+  to {
+    transform: translateY(-3vh);
+  }
+}
+@keyframes story-drift-mid {
+  to {
+    transform: translateY(-7vh);
+  }
+}
+@keyframes story-drift-near {
+  to {
+    transform: translateY(-16vh);
+  }
+}
+@keyframes story-drift-mascot {
+  to {
+    transform: translateY(12vh) scale(0.8);
+    opacity: 0.22;
   }
 }
 
 @supports (animation-timeline: scroll()) {
-  :root[data-skin="story"] .story-face > * {
-    animation: story-pass linear both;
+  :root[data-skin="story"] .story-layer-far,
+  :root[data-skin="story"] .story-layer-mid,
+  :root[data-skin="story"] .story-layer-near,
+  :root[data-skin="story"] .story-mascot {
     animation-timeline: scroll(root block);
+    animation-range: 0 220vh;
+    animation-fill-mode: both;
+    animation-timing-function: linear;
   }
-  :root[data-skin="story"] .story-face > :nth-child(1) {
-    animation-name: story-open;
-    animation-range: 0 110vh;
+  :root[data-skin="story"] .story-layer-far {
+    animation-name: story-drift-far;
   }
-  :root[data-skin="story"] .story-face > :nth-child(2) {
-    animation-range: 90vh 250vh;
+  :root[data-skin="story"] .story-layer-mid {
+    animation-name: story-drift-mid;
   }
-  :root[data-skin="story"] .story-face > :nth-child(3) {
-    animation-range: 230vh 420vh;
+  :root[data-skin="story"] .story-layer-near {
+    animation-name: story-drift-near;
+  }
+  /*
+    He sinks and shrinks as you read on, which keeps him from competing with
+    the chapters while still being there if you scroll back up to him.
+  */
+  :root[data-skin="story"] .story-mascot {
+    animation-name: story-drift-mascot;
   }
 }
 
 /*
-  A slow breath, independent of the scroll.
-
-  Scroll progress alone means the portrait is frozen whenever the reader
-  stops, which is most of the time. This keeps him alive on a still page.
-  It lives on an inner element so the two animations never fight over
-  `transform` — the outer one travels, this one breathes.
+  Less motion means a still drawing, not a missing one: he keeps the pose and
+  the scene keeps its depth, nothing twitches.
 */
-@keyframes story-float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-0.7deg);
+@media (prefers-reduced-motion: reduce) {
+  .story-forest *,
+  .story-forest *::before,
+  .story-forest *::after {
+    animation: none !important;
   }
-  50% {
-    transform: translateY(-16px) rotate(0.7deg);
+  .story-forest .m-eye-shut {
+    opacity: 0;
   }
-}
-
-.story-float {
-  height: 100%;
-  animation: story-float 7.5s ease-in-out infinite;
+  .story-forest .m-sweat,
+  .story-forest .m-note {
+    opacity: 0;
+  }
 }
 
 /* The chapter rule: a hairline that stops short, like a rule under a
@@ -677,19 +1022,6 @@ body {
   carries meaning is lost with them.
 */
 @media (prefers-reduced-motion: reduce) {
-  :root[data-skin="story"] .story-face > * {
-    animation: none !important;
-    transform: none;
-  }
-  :root[data-skin="story"] .story-face > :first-child {
-    opacity: 0.16;
-  }
-  :root[data-skin="story"] .story-face > :first-child ~ * {
-    opacity: 0;
-  }
-  .story-float {
-    animation: none;
-  }
   .story-nudge {
     animation: none;
     opacity: 0.8;
