@@ -550,11 +550,11 @@ body {
 @keyframes story-open {
   from {
     opacity: 0.26;
-    transform: translateY(0) scale(1);
+    transform: translate(0, 0) scale(1);
   }
   to {
     opacity: 0;
-    transform: translateY(-12vh) scale(1.2);
+    transform: translate(-13vw, -17vh) scale(1.26);
   }
 }
 
@@ -572,7 +572,7 @@ body {
 @keyframes story-pass {
   0% {
     opacity: 0;
-    transform: translateY(7vh) scale(0.97);
+    transform: translate(13vw, 11vh) scale(0.93);
   }
   22% {
     opacity: 0.24;
@@ -582,7 +582,7 @@ body {
   }
   100% {
     opacity: 0;
-    transform: translateY(-9vh) scale(1.13);
+    transform: translate(-11vw, -13vh) scale(1.17);
   }
 }
 
@@ -601,6 +601,29 @@ body {
   :root[data-skin="story"] .story-face > :nth-child(3) {
     animation-range: 230vh 420vh;
   }
+}
+
+/*
+  A slow breath, independent of the scroll.
+
+  Scroll progress alone means the portrait is frozen whenever the reader
+  stops, which is most of the time. This keeps him alive on a still page.
+  It lives on an inner element so the two animations never fight over
+  `transform` — the outer one travels, this one breathes.
+*/
+@keyframes story-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.7deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(0.7deg);
+  }
+}
+
+.story-float {
+  height: 100%;
+  animation: story-float 7.5s ease-in-out infinite;
 }
 
 /* The chapter rule: a hairline that stops short, like a rule under a
@@ -663,6 +686,9 @@ body {
   }
   :root[data-skin="story"] .story-face > :first-child ~ * {
     opacity: 0;
+  }
+  .story-float {
+    animation: none;
   }
   .story-nudge {
     animation: none;

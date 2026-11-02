@@ -20,7 +20,11 @@ export function StoryBackdrop() {
     <div className="story-face" aria-hidden>
       {FRAMES.map((frame, i) => (
         <div key={frame.src}>
-          <div className="relative h-full" style={{ width: frame.width }}>
+          {/* Two nested elements on purpose: the outer one is driven by
+              scroll progress, this one breathes on its own clock. One
+              element cannot do both — they would overwrite each other's
+              transform. */}
+          <div className="story-float relative" style={{ width: frame.width }}>
             <Image
               src={frame.src}
               alt=""
